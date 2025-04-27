@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VistaraAI - AI Image Generation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f8fafc;
+        }
+        .magic-icon {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+        }
+        .image-placeholder {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+        }
+        .code-font {
+            font-family: 'Cascadia Code', monospace;
+        }
+        .download-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .mobile-menu {
+            transition: all 0.3s ease-in-out;
+            transform-origin: top;
+        }
+        .mobile-menu-hidden {
+            transform: scaleY(0);
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        .mobile-menu-visible {
+            transform: scaleY(1);
+            opacity: 1;
+            height: auto;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
+                <span class="text-2xl font-bold text-gray-800">Vistara<span class="magic-icon">AI</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Features</a>
+                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Tools</a>
+                <a href="#api" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">API</a>
+            </div>
+            <button class="md:hidden" id="mobile-menu-button">
+                <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu mobile-menu-hidden md:hidden bg-white px-4 pb-4">
+            <div class="flex flex-col space-y-3 pt-2">
+                <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Features</a>
+                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Tools</a>
+                <a href="#api" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">API</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Transform Your <span class="magic-icon">Imagination</span> Into Stunning Visuals
+                </h1>
+                <p class="text-lg text-gray-600 mb-8">
+                    VistaraAI harnesses the power of artificial intelligence to generate breathtaking images from simple text prompts. Create unique artwork in seconds.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#tools" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1">
+                        Try Now
+                    </a>
+                    <a href="#api" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition transform hover:-translate-y-1">
+                        API Docs
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute -top-4 -left-4 w-full h-full rounded-xl bg-purple-100 z-0"></div>
+                    <div class="relative z-10 bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition">
+                        <div class="rounded-lg overflow-hidden">
+                            <img src="https://tmpfiles.org/dl/26260853/image.png" alt="AI Generated Image" class="w-full h-auto object-cover fade-in" id="hero-image">
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600 italic" id="hero-prompt">"A futuristic cityscape at sunset with flying cars and neon lights"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Powerful <span class="magic-icon">Features</span></h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Instant Generation</h3>
+                    <p class="text-gray-600">Create stunning images in seconds with our advanced AI models. No waiting, no rendering time.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Customizable Output</h3>
+                    <p class="text-gray-600">Control aspect ratio and content filters to get exactly what you need.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="code" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Developer Friendly</h3>
+                    <p class="text-gray-600">Simple REST API for easy integration into your applications and workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Generation Tool -->
+    <section id="tools" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Image <span class="magic-icon">Generator</span></h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Create Your Image</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Prompt</label>
+                                <textarea id="prompt" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Describe the image you want to generate..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
+                                    <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                        <option value="1:1">1:1 (Square)</option>
+                                        <option value="16:9">16:9 (Widescreen)</option>
+                                        <option value="9:16">9:16 (Portrait)</option>
+                                        <option value="4:3">4:3 (Standard)</option>
+                                        <option value="3:4">3:4 (Portrait)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
+                                    <div class="flex items-center h-full">
+                                        <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
+                                        <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                                Generate Image
+                            </button>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-50 p-6 flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Generated Image</h3>
+                        <div class="flex-1">
+                            <div id="image-container" class="relative">
+                                <div id="image-result" class="w-full image-placeholder rounded-lg flex items-center justify-center" style="min-height: 300px;">
+                                    <div class="text-center text-gray-400">
+                                        <i data-lucide="image" class="w-12 h-12 mx-auto mb-2"></i>
+                                        <p>Your generated image will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 hidden" id="download-section">
+                            <a id="download-link" href="#" class="download-btn inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                Download Image
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section id="api" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">API <span class="magic-icon">Documentation</span></h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="p-6">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API</h3>
+                        <p class="text-gray-600 mb-4">Generate images from text prompts with our simple REST API.</p>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/generate</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Parameters</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">prompt</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Text description of the image you want to generate</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">dimensions</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: "1:1")</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Aspect ratio (1:1, 16:9, 9:16, 4:3, 3:4)</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">safety</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">boolean</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: true)</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Enable/disable content safety filter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Response</h4>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">{
+  "images": [
+    "https://tmpfiles.org/dl/12345/image.png"
+  ],
+  "meta": {
+    "success": true,
+    "parameters": {
+      "prompt": "a cat wearing sunglasses",
+      "dimensions": "16:9"
+    }
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
+                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Transforming ideas into visuals with cutting-edge AI technology.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
+                        <li><a href="#tools" class="text-gray-400 hover:text-white transition-colors duration-300">Image Generator</a></li>
+                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors duration-300">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2023 VistaraAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('mobile-menu-hidden');
+            mobileMenu.classList.toggle('mobile-menu-visible');
+            
+            // Toggle menu icon
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('mobile-menu-hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('mobile-menu-hidden');
+                mobileMenu.classList.remove('mobile-menu-visible');
+                mobileMenuButton.querySelector('i').setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+        
+        // Image generation functionality
+        document.getElementById('generate-btn').addEventListener('click', async function() {
+            const prompt = document.getElementById('prompt').value;
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+            
+            const dimensions = document.getElementById('dimensions').value;
+            const safety = document.getElementById('safety').checked;
+            
+            // Show loading state
+            const imageResult = document.getElementById('image-result');
+            imageResult.innerHTML = `
+                <div class="text-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+                    <p>Generating your image...</p>
+                </div>
+            `;
+            
+            try {
+                // Build API URL
+                const apiUrl = `https://img.hello-kaiiddo.workers.dev/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}`;
+                
+                // Make the API call
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.images || data.images.length === 0) {
+                    throw new Error('No images returned from API');
+                }
+                
+                // Display the first image
+                const imageUrl = data.images[0];
+                const img = new Image();
+                
+                img.onload = function() {
+                    // Set container to match image aspect ratio
+                    const container = document.getElementById('image-container');
+                    const aspectRatio = this.width / this.height;
+                    const maxWidth = container.clientWidth;
+                    const calculatedHeight = maxWidth / aspectRatio;
+                    
+                    imageResult.innerHTML = '';
+                    imageResult.appendChild(img);
+                    imageResult.style.height = `${calculatedHeight}px`;
+                    imageResult.style.width = '100%';
+                    imageResult.style.overflow = 'hidden';
+                    
+                    // Show download link
+                    const downloadSection = document.getElementById('download-section');
+                    const downloadLink = document.getElementById('download-link');
+                    downloadLink.href = imageUrl;
+                    downloadSection.classList.remove('hidden');
+                };
+                
+                img.onerror = function() {
+                    throw new Error('Failed to load generated image');
+                };
+                
+                img.src = imageUrl;
+                img.className = 'w-full h-auto object-contain rounded-lg fade-in';
+                
+            } catch (error) {
+                imageResult.innerHTML = `
+                    <div class="text-center text-red-500">
+                        <i data-lucide="alert-circle" class="w-12 h-12 mx-auto mb-2"></i>
+                        <p>Error generating image</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                    </div>
+                `;
+                lucide.createIcons(); // Refresh icons
+            }
+        });
+    </script>
+</body>
+</html>
