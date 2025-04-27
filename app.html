@@ -138,7 +138,7 @@
                         <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-2 text-gray-800">Customizable Output</h3>
-                    <p class="text-gray-600">Control aspect ratio and content filters to get exactly what you need.</p>
+                    <p class="text-gray-600">Control aspect ratio, number of images, and content filters to get exactly what you need.</p>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
                     <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
@@ -152,104 +152,112 @@
     </section>
 
     <!-- Image Generation Tool -->
-<!-- Image Generation Tool -->
-<section id="tools" class="py-16">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Image <span class="magic-icon">Generator</span></h2>
-        
-        <!-- Top Ad -->
-        <div class="flex flex-col items-center mb-6">
-            <div class="relative w-full max-w-[728px]">
-                <iframe 
-                    src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
-                    marginwidth="0" 
-                    marginheight="0" 
-                    width="728" 
-                    height="90" 
-                    scrolling="no" 
-                    border="0" 
-                    frameborder="0"
-                    class="mx-auto"
-                ></iframe>
-                
+    <section id="tools" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Image <span class="magic-icon">Generator</span></h2>
+            
+            <!-- Top Ad -->
+            <div class="flex flex-col items-center mb-6">
+                <div class="relative w-full max-w-[728px]">
+                    <iframe 
+                        src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
+                        marginwidth="0" 
+                        marginheight="0" 
+                        width="728" 
+                        height="90" 
+                        scrolling="no" 
+                        border="0" 
+                        frameborder="0"
+                        class="mx-auto"
+                    ></iframe>
+                </div>
             </div>
-        </div>
-        
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-            <div class="md:flex">
-                <div class="md:w-1/2 p-6">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Create Your Image</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Prompt</label>
-                            <textarea id="prompt" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Describe the image you want to generate..."></textarea>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Create Your Image</h3>
+                        <div class="space-y-4">
                             <div>
-                                <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
-                                <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                    <option value="1:1">1:1 (Square)</option>
-                                    <option value="16:9">16:9 (Widescreen)</option>
-                                    <option value="9:16">9:16 (Portrait)</option>
-                                    <option value="4:3">4:3 (Standard)</option>
-                                    <option value="3:4">3:4 (Portrait)</option>
-                                </select>
+                                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Prompt</label>
+                                <textarea id="prompt" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Describe the image you want to generate..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
+                                    <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                        <option value="1:1">1:1 (Square)</option>
+                                        <option value="16:9">16:9 (Widescreen)</option>
+                                        <option value="9:16">9:16 (Portrait)</option>
+                                        <option value="4:3">4:3 (Standard)</option>
+                                        <option value="3:4">3:4 (Portrait)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="image-count" class="block text-sm font-medium text-gray-700 mb-1">Number of Images</label>
+                                    <select id="image-count" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
-                                <div class="flex items-center h-full">
+                                <div class="flex items-center">
                                     <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
                                     <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
                                 </div>
                             </div>
+                            <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                                Generate Image
+                            </button>
                         </div>
-                        <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center">
-                            <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
-                            Generate Image
-                        </button>
                     </div>
-                </div>
-                <div class="md:w-1/2 bg-gray-50 p-6 flex flex-col">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Generated Image</h3>
-                    <div class="flex-1">
-                        <div id="image-container" class="relative">
-                            <div id="image-result" class="w-full image-placeholder rounded-lg flex items-center justify-center" style="min-height: 300px;">
-                                <div class="text-center text-gray-400">
-                                    <i data-lucide="image" class="w-12 h-12 mx-auto mb-2"></i>
-                                    <p>Your generated image will appear here</p>
+                    <div class="md:w-1/2 bg-gray-50 p-6 flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Generated Images</h3>
+                        <div class="flex-1">
+                            <div id="image-container" class="relative">
+                                <div id="image-result" class="w-full image-placeholder rounded-lg flex items-center justify-center" style="min-height: 300px;">
+                                    <div class="text-center text-gray-400">
+                                        <i data-lucide="image" class="w-12 h-12 mx-auto mb-2"></i>
+                                        <p>Your generated images will appear here</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4 hidden" id="download-section">
-                        <a id="download-link" href="#" class="download-btn inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium">
-                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                            Download Image
-                        </a>
+                        <div class="mt-4 hidden" id="download-section">
+                            <a id="download-link" href="#" class="download-btn inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                Download Image
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Bottom Ad -->
-        <div class="flex flex-col items-center mt-6">
-            <div class="relative w-full max-w-[728px]">
-                <iframe 
-                    src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
-                    marginwidth="0" 
-                    marginheight="0" 
-                    width="728" 
-                    height="90" 
-                    scrolling="no" 
-                    border="0" 
-                    frameborder="0"
-                    class="mx-auto"
-                ></iframe>
-                
+            
+            <!-- Bottom Ad -->
+            <div class="flex flex-col items-center mt-6">
+                <div class="relative w-full max-w-[728px]">
+                    <iframe 
+                        src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
+                        marginwidth="0" 
+                        marginheight="0" 
+                        width="728" 
+                        height="90" 
+                        scrolling="no" 
+                        border="0" 
+                        frameborder="0"
+                        class="mx-auto"
+                    ></iframe>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- API Documentation -->
     <section id="api" class="py-16 bg-gray-50">
@@ -291,6 +299,12 @@
                                         <td class="px-4 py-2 text-sm text-gray-700">Aspect ratio (1:1, 16:9, 9:16, 4:3, 3:4)</td>
                                     </tr>
                                     <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">image</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">number</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: 1)</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Number of images to generate (1-6)</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
                                         <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">safety</td>
                                         <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">boolean</td>
                                         <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: true)</td>
@@ -304,7 +318,7 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
                         <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9</code></pre>
+                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9&image=3</code></pre>
                         </div>
                     </div>
 
@@ -313,13 +327,16 @@
                         <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
                             <pre class="code-font"><code class="text-sm">{
   "images": [
-    "https://tmpfiles.org/dl/12345/image.png"
+    "https://tmpfiles.org/dl/12345/image1.png",
+    "https://tmpfiles.org/dl/12346/image2.png",
+    "https://tmpfiles.org/dl/12347/image3.png"
   ],
   "meta": {
     "success": true,
     "parameters": {
       "prompt": "a cat wearing sunglasses",
-      "dimensions": "16:9"
+      "dimensions": "16:9",
+      "image": 3
     }
   }
 }</code></pre>
@@ -417,19 +434,23 @@
             
             const dimensions = document.getElementById('dimensions').value;
             const safety = document.getElementById('safety').checked;
+            const imageCount = document.getElementById('image-count').value;
             
             // Show loading state
             const imageResult = document.getElementById('image-result');
             imageResult.innerHTML = `
                 <div class="text-center">
                     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-                    <p>Generating your image...</p>
+                    <p>Generating ${imageCount} image${imageCount > 1 ? 's' : ''}...</p>
                 </div>
             `;
             
+            // Hide download section (we'll handle downloads differently for multiple images)
+            document.getElementById('download-section').classList.add('hidden');
+            
             try {
-                // Build API URL
-                const apiUrl = `https://img.hello-kaiiddo.workers.dev/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}`;
+                // Build API URL with image count parameter
+                const apiUrl = `https://img.hello-kaiiddo.workers.dev/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}&image=${imageCount}`;
                 
                 // Make the API call
                 const response = await fetch(apiUrl);
@@ -444,42 +465,47 @@
                     throw new Error('No images returned from API');
                 }
                 
-                // Display the first image
-                const imageUrl = data.images[0];
-                const img = new Image();
+                // Clear the container
+                imageResult.innerHTML = '';
+                imageResult.style.height = 'auto';
+                imageResult.style.width = '100%';
+                imageResult.style.overflow = 'visible';
                 
-                img.onload = function() {
-                    // Set container to match image aspect ratio
-                    const container = document.getElementById('image-container');
-                    const aspectRatio = this.width / this.height;
-                    const maxWidth = container.clientWidth;
-                    const calculatedHeight = maxWidth / aspectRatio;
+                // Create a grid for the images
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                
+                // Display all images
+                data.images.forEach((imageUrl, index) => {
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'relative group';
                     
-                    imageResult.innerHTML = '';
-                    imageResult.appendChild(img);
-                    imageResult.style.height = `${calculatedHeight}px`;
-                    imageResult.style.width = '100%';
-                    imageResult.style.overflow = 'hidden';
+                    const img = new Image();
+                    img.onload = function() {
+                        img.className = 'w-full h-auto object-cover rounded-lg fade-in';
+                    };
+                    img.src = imageUrl;
                     
-                    // Show download link
-                    const downloadSection = document.getElementById('download-section');
-                    const downloadLink = document.getElementById('download-link');
-                    downloadLink.href = imageUrl;
-                    downloadSection.classList.remove('hidden');
-                };
+                    // Create download button for each image
+                    const downloadBtn = document.createElement('a');
+                    downloadBtn.href = imageUrl;
+                    downloadBtn.download = `vistaraai-image-${index+1}.png`;
+                    downloadBtn.className = 'absolute bottom-2 right-2 bg-white/80 hover:bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity';
+                    downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 inline mr-1"></i> Download';
+                    
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(downloadBtn);
+                    grid.appendChild(imageContainer);
+                });
                 
-                img.onerror = function() {
-                    throw new Error('Failed to load generated image');
-                };
-                
-                img.src = imageUrl;
-                img.className = 'w-full h-auto object-contain rounded-lg fade-in';
+                imageResult.appendChild(grid);
+                lucide.createIcons(); // Refresh icons for download buttons
                 
             } catch (error) {
                 imageResult.innerHTML = `
                     <div class="text-center text-red-500">
                         <i data-lucide="alert-circle" class="w-12 h-12 mx-auto mb-2"></i>
-                        <p>Error generating image</p>
+                        <p>Error generating images</p>
                         <p class="text-sm mt-2">${error.message}</p>
                     </div>
                 `;
