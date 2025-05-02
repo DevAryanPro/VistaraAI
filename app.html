@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VistaraAI - AI Image Generation</title>
+    <title>VistaraAI v1.3 - AI Image Generation</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet">
@@ -57,6 +57,26 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .version-badge {
+            background-color: #8b5cf6;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .api-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .api-tab.active {
+            border-bottom-color: #8b5cf6;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -65,7 +85,7 @@
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
-                <span class="text-2xl font-bold text-gray-800">Vistara<span class="magic-icon">AI</span></span>
+                <span class="text-2xl font-bold text-gray-800">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v1.3</span></span>
             </div>
             <div class="hidden md:flex space-x-6">
                 <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Features</a>
@@ -137,15 +157,15 @@
                     <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Customizable Output</h3>
-                    <p class="text-gray-600">Control aspect ratio, number of images, and content filters to get exactly what you need.</p>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Multiple APIs</h3>
+                    <p class="text-gray-600">Choose between v1 with advanced controls or v2 with automatic hosting. Both deliver amazing results.</p>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
                     <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="code" class="w-6 h-6 text-white"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-2 text-gray-800">Developer Friendly</h3>
-                    <p class="text-gray-600">Simple REST API for easy integration into your applications and workflows.</p>
+                    <p class="text-gray-600">Simple REST APIs for easy integration into your applications and workflows.</p>
                 </div>
             </div>
         </div>
@@ -182,36 +202,51 @@
                                 <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Prompt</label>
                                 <textarea id="prompt" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Describe the image you want to generate..."></textarea>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
-                                    <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                        <option value="1:1">1:1 (Square)</option>
-                                        <option value="16:9">16:9 (Widescreen)</option>
-                                        <option value="9:16">9:16 (Portrait)</option>
-                                        <option value="4:3">4:3 (Standard)</option>
-                                        <option value="3:4">3:4 (Portrait)</option>
-                                    </select>
+                            
+                            <div class="flex space-x-4 mb-4">
+                                <button id="v1-tab" class="api-tab active">API v1</button>
+                                <button id="v2-tab" class="api-tab">API v2</button>
+                            </div>
+                            
+                            <div id="v1-options">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
+                                        <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                            <option value="1:1">1:1 (Square)</option>
+                                            <option value="16:9">16:9 (Widescreen)</option>
+                                            <option value="9:16">9:16 (Portrait)</option>
+                                            <option value="4:3">4:3 (Standard)</option>
+                                            <option value="3:4">3:4 (Portrait)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="image-count" class="block text-sm font-medium text-gray-700 mb-1">Number of Images</label>
+                                        <select id="image-count" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="image-count" class="block text-sm font-medium text-gray-700 mb-1">Number of Images</label>
-                                    <select id="image-count" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
+                                        <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
-                                    <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                            
+                            <div id="v2-options" class="hidden">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <p class="text-sm text-blue-800">API v2 provides simpler generation with automatic temporary hosting. For advanced controls, use API v1.</p>
                                 </div>
                             </div>
+                            
                             <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center">
                                 <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
                                 Generate Image
@@ -263,13 +298,22 @@
     <section id="api" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">API <span class="magic-icon">Documentation</span></h2>
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+            
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button id="doc-v1-tab" class="api-tab active">API v1</button>
+                    <button id="doc-v2-tab" class="api-tab">API v2</button>
+                </div>
+            </div>
+            
+            <!-- V1 API Documentation -->
+            <div id="v1-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
                 <div class="p-6">
                     <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API</h3>
-                        <p class="text-gray-600 mb-4">Generate images from text prompts with our simple REST API.</p>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API v1</h3>
+                        <p class="text-gray-600 mb-4">Original multi-image generation API with advanced controls.</p>
                         <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/generate</code></pre>
+                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/v1/generate</code></pre>
                         </div>
                     </div>
 
@@ -310,6 +354,12 @@
                                         <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: true)</td>
                                         <td class="px-4 py-2 text-sm text-gray-700">Enable/disable content safety filter</td>
                                     </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">style</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Art style (photorealistic, anime, etc)</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -318,7 +368,7 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
                         <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9&image=3</code></pre>
+                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9&image=3&style=photorealistic</code></pre>
                         </div>
                     </div>
 
@@ -336,9 +386,66 @@
     "parameters": {
       "prompt": "a cat wearing sunglasses",
       "dimensions": "16:9",
-      "image": 3
+      "image": 3,
+      "style": "photorealistic"
     }
   }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- V2 API Documentation -->
+            <div id="v2-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition hidden">
+                <div class="p-6">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API v2</h3>
+                        <p class="text-gray-600 mb-4">Enhanced API with automatic temporary hosting and simplified parameters.</p>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/v2/generate</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Parameters</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">prompt</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                        <td class="px-4 py-2 text-sm text-gray-700">Text description of the image you want to generate</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=a%20sunset%20over%20mountains</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Response</h4>
+                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                            <pre class="code-font"><code class="text-sm">{
+  "status": "success",
+  "hosted_url": "https://tmpfiles.org/dl/12345/image.png",
+  "prompt": "a sunset over mountains",
+  "expires_in": "60 minutes"
 }</code></pre>
                         </div>
                     </div>
@@ -354,7 +461,7 @@
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-4">
                         <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
-                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span></span>
+                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v1.3</span></span>
                     </div>
                     <p class="text-gray-400 mb-6">Transforming ideas into visuals with cutting-edge AI technology.</p>
                     <div class="flex space-x-4">
@@ -424,6 +531,46 @@
             });
         });
         
+        // API version tabs in generator
+        const v1Tab = document.getElementById('v1-tab');
+        const v2Tab = document.getElementById('v2-tab');
+        const v1Options = document.getElementById('v1-options');
+        const v2Options = document.getElementById('v2-options');
+        
+        v1Tab.addEventListener('click', function() {
+            v1Tab.classList.add('active');
+            v2Tab.classList.remove('active');
+            v1Options.classList.remove('hidden');
+            v2Options.classList.add('hidden');
+        });
+        
+        v2Tab.addEventListener('click', function() {
+            v2Tab.classList.add('active');
+            v1Tab.classList.remove('active');
+            v2Options.classList.remove('hidden');
+            v1Options.classList.add('hidden');
+        });
+        
+        // API documentation tabs
+        const docV1Tab = document.getElementById('doc-v1-tab');
+        const docV2Tab = document.getElementById('doc-v2-tab');
+        const v1Docs = document.getElementById('v1-docs');
+        const v2Docs = document.getElementById('v2-docs');
+        
+        docV1Tab.addEventListener('click', function() {
+            docV1Tab.classList.add('active');
+            docV2Tab.classList.remove('active');
+            v1Docs.classList.remove('hidden');
+            v2Docs.classList.add('hidden');
+        });
+        
+        docV2Tab.addEventListener('click', function() {
+            docV2Tab.classList.add('active');
+            docV1Tab.classList.remove('active');
+            v2Docs.classList.remove('hidden');
+            v1Docs.classList.add('hidden');
+        });
+        
         // Image generation functionality
         document.getElementById('generate-btn').addEventListener('click', async function() {
             const prompt = document.getElementById('prompt').value;
@@ -432,16 +579,27 @@
                 return;
             }
             
-            const dimensions = document.getElementById('dimensions').value;
-            const safety = document.getElementById('safety').checked;
-            const imageCount = document.getElementById('image-count').value;
+            const isV2 = v2Tab.classList.contains('active');
+            let apiUrl;
+            
+            if (isV2) {
+                // V2 API call
+                apiUrl = `https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=${encodeURIComponent(prompt)}`;
+            } else {
+                // V1 API call
+                const dimensions = document.getElementById('dimensions').value;
+                const safety = document.getElementById('safety').checked;
+                const imageCount = document.getElementById('image-count').value;
+                
+                apiUrl = `https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}&image=${imageCount}`;
+            }
             
             // Show loading state
             const imageResult = document.getElementById('image-result');
             imageResult.innerHTML = `
                 <div class="text-center">
                     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-                    <p>Generating ${imageCount} image${imageCount > 1 ? 's' : ''}...</p>
+                    <p>Generating image${isV2 ? '' : 's'}...</p>
                 </div>
             `;
             
@@ -449,9 +607,6 @@
             document.getElementById('download-section').classList.add('hidden');
             
             try {
-                // Build API URL with image count parameter
-                const apiUrl = `https://img.hello-kaiiddo.workers.dev/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}&image=${imageCount}`;
-                
                 // Make the API call
                 const response = await fetch(apiUrl);
                 
@@ -461,44 +616,76 @@
                 
                 const data = await response.json();
                 
-                if (!data.images || data.images.length === 0) {
-                    throw new Error('No images returned from API');
-                }
-                
                 // Clear the container
                 imageResult.innerHTML = '';
                 imageResult.style.height = 'auto';
                 imageResult.style.width = '100%';
                 imageResult.style.overflow = 'visible';
                 
-                // Create a grid for the images
-                const grid = document.createElement('div');
-                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
-                
-                // Display all images
-                data.images.forEach((imageUrl, index) => {
-                    const imageContainer = document.createElement('div');
-                    imageContainer.className = 'relative group';
+                if (isV2) {
+                    // Handle V2 response (single image with hosted URL)
+                    if (!data.hosted_url) {
+                        throw new Error('No image URL returned from API');
+                    }
                     
                     const img = new Image();
                     img.onload = function() {
                         img.className = 'w-full h-auto object-cover rounded-lg fade-in';
                     };
-                    img.src = imageUrl;
+                    img.src = data.hosted_url;
                     
-                    // Create download button for each image
+                    // Create download button
                     const downloadBtn = document.createElement('a');
-                    downloadBtn.href = imageUrl;
-                    downloadBtn.download = `vistaraai-image-${index+1}.png`;
-                    downloadBtn.className = 'absolute bottom-2 right-2 bg-white/80 hover:bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity';
-                    downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 inline mr-1"></i> Download';
+                    downloadBtn.href = data.hosted_url;
+                    downloadBtn.download = `vistaraai-image.png`;
+                    downloadBtn.className = 'mt-4 inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium';
+                    downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download Image';
                     
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(downloadBtn);
-                    grid.appendChild(imageContainer);
-                });
+                    // Create info about expiration
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'mt-2 text-sm text-gray-500';
+                    infoDiv.textContent = `Image will be available for ${data.expires_in || '60 minutes'}`;
+                    
+                    imageResult.appendChild(img);
+                    imageResult.appendChild(downloadBtn);
+                    imageResult.appendChild(infoDiv);
+                    
+                } else {
+                    // Handle V1 response (multiple images)
+                    if (!data.images || data.images.length === 0) {
+                        throw new Error('No images returned from API');
+                    }
+                    
+                    // Create a grid for the images
+                    const grid = document.createElement('div');
+                    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                    
+                    // Display all images
+                    data.images.forEach((imageUrl, index) => {
+                        const imageContainer = document.createElement('div');
+                        imageContainer.className = 'relative group';
+                        
+                        const img = new Image();
+                        img.onload = function() {
+                            img.className = 'w-full h-auto object-cover rounded-lg fade-in';
+                        };
+                        img.src = imageUrl;
+                        
+                        // Create download button for each image
+                        const downloadBtn = document.createElement('a');
+                        downloadBtn.href = imageUrl;
+                        downloadBtn.download = `vistaraai-image-${index+1}.png`;
+                        downloadBtn.className = 'absolute bottom-2 right-2 bg-white/80 hover:bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity';
+                        downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 inline mr-1"></i> Download';
+                        
+                        imageContainer.appendChild(img);
+                        imageContainer.appendChild(downloadBtn);
+                        grid.appendChild(imageContainer);
+                    });
+                    
+                    imageResult.appendChild(grid);
+                }
                 
-                imageResult.appendChild(grid);
                 lucide.createIcons(); // Refresh icons for download buttons
                 
             } catch (error) {
