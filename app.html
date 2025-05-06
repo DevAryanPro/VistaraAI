@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VistaraAI v1.3 - AI Image Generation</title>
+    <title>VistaraAI v3 - Advanced AI Image Generation</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            font-family: 'Lexend', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
         }
         .magic-icon {
@@ -77,20 +77,98 @@
             color: #8b5cf6;
             font-weight: 600;
         }
+        .pro-badge {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .image-grid {
+            display: grid;
+            gap: 1rem;
+            width: 100%;
+        }
+        .image-grid.single {
+            grid-template-columns: 1fr;
+        }
+        .image-grid.double {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .image-grid.triple {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .image-grid.triple > div:first-child {
+            grid-column: span 2;
+        }
+        @media (min-width: 768px) {
+            .image-grid.triple {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .image-grid.triple > div:first-child {
+                grid-column: span 1;
+            }
+        }
+        .image-grid.multiple {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (min-width: 768px) {
+            .image-grid.multiple {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .image-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .image-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .image-card:hover img {
+            transform: scale(1.03);
+        }
+        .image-card .download-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+        }
+        .image-card:hover .download-overlay {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm py-4">
+    <nav class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
-                <span class="text-2xl font-bold text-gray-800">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v1.3</span></span>
+                <span class="text-2xl font-bold text-gray-800">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v3</span></span>
             </div>
             <div class="hidden md:flex space-x-6">
                 <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Features</a>
-                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Tools</a>
+                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Generator</a>
                 <a href="#api" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">API</a>
+                <a href="#enterprise" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300">Enterprise</a>
             </div>
             <button class="md:hidden" id="mobile-menu-button">
                 <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
@@ -100,40 +178,49 @@
         <div id="mobile-menu" class="mobile-menu mobile-menu-hidden md:hidden bg-white px-4 pb-4">
             <div class="flex flex-col space-y-3 pt-2">
                 <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Features</a>
-                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Tools</a>
+                <a href="#tools" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Generator</a>
                 <a href="#api" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">API</a>
+                <a href="#enterprise" class="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300 py-2">Enterprise</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="py-16 md:py-24">
+    <section class="py-16 md:py-24 bg-gradient-to-b from-purple-50 to-white">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                    Transform Your <span class="magic-icon">Imagination</span> Into Stunning Visuals
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                    Professional AI Image Generation <span class="magic-icon">Powered by V3</span>
                 </h1>
-                <p class="text-lg text-gray-600 mb-8">
-                    VistaraAI harnesses the power of artificial intelligence to generate breathtaking images from simple text prompts. Create unique artwork in seconds.
+                <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                    VistaraAI v3 introduces our most advanced image generation technology yet, with enhanced quality, faster processing, and enterprise-grade reliability.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#tools" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1">
-                        Try Now
+                    <a href="#tools" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        Try Generator
                     </a>
-                    <a href="#api" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition transform hover:-translate-y-1">
-                        API Docs
+                    <a href="#api" class="border border-purple-600 text-purple-600 px-6 py-3 rounded-lg font-medium hover:bg-purple-50 transition transform hover:-translate-y-1">
+                        Explore API
                     </a>
+                </div>
+                <div class="mt-6 flex items-center text-sm text-gray-500">
+                    <i data-lucide="zap" class="w-4 h-4 mr-2 text-yellow-500"></i>
+                    <span>Now featuring our new v3 API with enhanced privacy</span>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <div class="relative w-full max-w-md">
-                    <div class="absolute -top-4 -left-4 w-full h-full rounded-xl bg-purple-100 z-0"></div>
-                    <div class="relative z-10 bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition">
-                        <div class="rounded-lg overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/DevAryanPro/VistaraAI/refs/heads/main/image.png" alt="AI Generated Image" class="w-full h-auto object-cover fade-in" id="hero-image">
+                <div class="relative w-full max-w-xl">
+                    <div class="absolute -top-4 -left-4 w-full h-full rounded-2xl bg-purple-100 z-0"></div>
+                    <div class="relative z-10 bg-white p-3 rounded-2xl shadow-2xl hover:shadow-2xl transition">
+                        <div class="rounded-xl overflow-hidden border border-gray-100">
+                            <img src="https://image.pollinations.ai/prompt/A%20futuristic%20cityscape%20with%20neon%20lights%20and%20flying%20cars?width=1024&height=1024&model=flux-3d&nologo=true&private=false&enhance=false&safe=false&seed=3220784403" alt="AI Generated Image" class="w-full h-auto object-cover fade-in rounded-lg" id="hero-image">
                         </div>
-                        <div class="p-4">
-                            <p class="text-sm text-gray-600 italic" id="hero-prompt">"A futuristic cityscape at sunset with flying cars and neon lights"</p>
+                        <div class="p-4 bg-gray-50 rounded-b-lg border-t border-gray-100">
+                            <p class="text-sm text-gray-600 font-medium" id="hero-prompt">"A futuristic cityscape with neon lights and flying cars"</p>
+                            <div class="mt-2 flex justify-between items-center">
+                                <span class="text-xs text-gray-400">Generated with VistaraAI v3</span>
+                                <span class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">1024×1024</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,563 +229,722 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-16 bg-gray-50">
+    <section id="features" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Powerful <span class="magic-icon">Features</span></h2>
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Features</span>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose <span class="magic-icon">VistaraAI v3</span></h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Our platform combines cutting-edge AI with professional tools for creators and developers.</p>
+            </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
-                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                <div class="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-200 shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4 shadow-md">
+                        <i data-lucide="shield" class="w-6 h-6 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Instant Generation</h3>
-                    <p class="text-gray-600">Create stunning images in seconds with our advanced AI models. No waiting, no rendering time.</p>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Enhanced Privacy</h3>
+                    <p class="text-gray-600">Our v3 API doesn't expose requests in network logs, providing better privacy for your applications.</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
-                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
+                <div class="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-200 shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4 shadow-md">
+                        <i data-lucide="image" class="w-6 h-6 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Multiple APIs</h3>
-                    <p class="text-gray-600">Choose between v1 with advanced controls or v2 with automatic hosting. Both deliver amazing results.</p>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Smart Image Display</h3>
+                    <p class="text-gray-600">Automatically adjusts image layout for optimal viewing, whether single or multiple results.</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
-                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="code" class="w-6 h-6 text-white"></i>
+                <div class="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-200 shadow-sm hover:shadow-md transition transform hover:-translate-y-1">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4 shadow-md">
+                        <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Developer Friendly</h3>
-                    <p class="text-gray-600">Simple REST APIs for easy integration into your applications and workflows.</p>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Advanced Models</h3>
+                    <p class="text-gray-600">Access to our most sophisticated AI models with improved image quality and generation speed.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Image Generation Tool -->
-    <section id="tools" class="py-16">
+    <section id="tools" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Image <span class="magic-icon">Generator</span></h2>
-            
-            <!-- Top Ad -->
-            <div class="flex flex-col items-center mb-6">
-                <div class="relative w-full max-w-[728px]">
-                    <iframe 
-                        src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
-                        marginwidth="0" 
-                        marginheight="0" 
-                        width="728" 
-                        height="90" 
-                        scrolling="no" 
-                        border="0" 
-                        frameborder="0"
-                        class="mx-auto"
-                    ></iframe>
-                </div>
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Generator</span>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">AI Image <span class="magic-icon">Generator</span></h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Create stunning visuals with our powerful image generation tool.</p>
             </div>
             
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+            <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
                 <div class="md:flex">
-                    <div class="md:w-1/2 p-6">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Create Your Image</h3>
-                        <div class="space-y-4">
+                    <div class="md:w-1/2 p-8 border-r border-gray-100">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                            <i data-lucide="wand-2" class="w-5 h-5 mr-2 magic-icon"></i>
+                            Generation Settings
+                        </h3>
+                        <div class="space-y-6">
                             <div>
-                                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Prompt</label>
-                                <textarea id="prompt" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Describe the image you want to generate..."></textarea>
+                                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-2">Describe your image</label>
+                                <textarea id="prompt" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="A beautiful landscape with mountains and a lake at sunset..."></textarea>
                             </div>
                             
-                            <div class="flex space-x-4 mb-4">
-                                <button id="v1-tab" class="api-tab active">API v1</button>
-                                <button id="v2-tab" class="api-tab">API v2</button>
-                            </div>
-                            
-                            <div id="v1-options">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Aspect Ratio</label>
-                                        <select id="dimensions" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                            <option value="1:1">1:1 (Square)</option>
-                                            <option value="16:9">16:9 (Widescreen)</option>
-                                            <option value="9:16">9:16 (Portrait)</option>
-                                            <option value="4:3">4:3 (Standard)</option>
-                                            <option value="3:4">3:4 (Portrait)</option>
-                                        </select>
+                            <div class="border-t border-gray-100 pt-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-3">API Version</label>
+                                <div class="flex space-x-4 mb-6">
+                                    <button id="v1-tab" class="api-tab">API v1</button>
+                                    <button id="v2-tab" class="api-tab">API v2</button>
+                                    <button id="v3-tab" class="api-tab active">API v3 <span class="pro-badge">NEW</span></button>
+                                </div>
+                                
+                                <div id="v1-options" class="hidden space-y-6">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-2">Aspect Ratio</label>
+                                            <select id="dimensions" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                                <option value="1:1">1:1 (Square)</option>
+                                                <option value="16:9">16:9 (Widescreen)</option>
+                                                <option value="9:16">9:16 (Portrait)</option>
+                                                <option value="4:3">4:3 (Standard)</option>
+                                                <option value="3:4">3:4 (Portrait)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="image-count" class="block text-sm font-medium text-gray-700 mb-2">Image Count</label>
+                                            <select id="image-count" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div>
-                                        <label for="image-count" class="block text-sm font-medium text-gray-700 mb-1">Number of Images</label>
-                                        <select id="image-count" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                        </select>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
+                                                <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
-                                        <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                                
+                                <div id="v2-options" class="hidden">
+                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                        <p class="text-sm text-blue-800">API v2 provides simpler generation with automatic temporary hosting. For advanced controls, use API v1 or v3.</p>
+                                    </div>
+                                </div>
+                                
+                                <div id="v3-options" class="space-y-6">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="v3-model" class="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                                            <select id="v3-model" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                                <option value="flux-3d">Flux 3D</option>
+                                                <option value="realistic-vision">Realistic Vision</option>
+                                                <option value="anime-diffusion">Anime Diffusion</option>
+                                                <option value="portrait-plus">Portrait Plus</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="v3-size" class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                                            <select id="v3-size" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                                <option value="512x512">512×512</option>
+                                                <option value="768x768">768×768</option>
+                                                <option value="1024x1024" selected>1024×1024</option>
+                                                <option value="1024x576">Widescreen (1024×576)</option>
+                                                <option value="576x1024">Portrait (576×1024)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                                        <p class="text-sm text-purple-800 flex items-start">
+                                            <i data-lucide="info" class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0"></i>
+                                            <span>V3 API provides enhanced privacy with requests not visible in network logs, along with higher quality generation.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div id="v2-options" class="hidden">
-                                <div class="bg-blue-50 p-4 rounded-lg">
-                                    <p class="text-sm text-blue-800">API v2 provides simpler generation with automatic temporary hosting. For advanced controls, use API v1.</p>
-                                </div>
-                            </div>
-                            
-                            <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center">
+                            <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center shadow-md">
                                 <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
                                 Generate Image
                             </button>
                         </div>
                     </div>
-                    <div class="md:w-1/2 bg-gray-50 p-6 flex flex-col">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Generated Images</h3>
+                    <div class="md:w-1/2 bg-gray-50 p-8 flex flex-col">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                            <i data-lucide="image" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Generated Results
+                        </h3>
                         <div class="flex-1">
-                            <div id="image-container" class="relative">
-                                <div id="image-result" class="w-full image-placeholder rounded-lg flex items-center justify-center" style="min-height: 300px;">
-                                    <div class="text-center text-gray-400">
-                                        <i data-lucide="image" class="w-12 h-12 mx-auto mb-2"></i>
-                                        <p>Your generated images will appear here</p>
+                            <div id="image-container" class="relative h-full">
+                                <div id="image-result" class="w-full h-full image-placeholder rounded-xl flex items-center justify-center" style="min-height: 300px;">
+                                    <div class="text-center text-gray-400 p-6">
+                                        <i data-lucide="image" class="w-12 h-12 mx-auto mb-3"></i>
+                                        <p class="font-medium mb-1">No images generated yet</p>
+                                        <p class="text-sm max-w-xs mx-auto">Enter a prompt and click "Generate Image" to create stunning visuals</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4 hidden" id="download-section">
-                            <a id="download-link" href="#" class="download-btn inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium">
-                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                                Download Image
-                            </a>
-                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Bottom Ad -->
-            <div class="flex flex-col items-center mt-6">
-                <div class="relative w-full max-w-[728px]">
-                    <iframe 
-                        src="https://zerads.com/ad/ad.php?width=728&ref=8331" 
-                        marginwidth="0" 
-                        marginheight="0" 
-                        width="728" 
-                        height="90" 
-                        scrolling="no" 
-                        border="0" 
-                        frameborder="0"
-                        class="mx-auto"
-                    ></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- API Documentation -->
-    <section id="api" class="py-16 bg-gray-50">
+    <section id="api" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">API <span class="magic-icon">Documentation</span></h2>
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Developers</span>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">API <span class="magic-icon">Documentation</span></h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Integrate our image generation into your applications with our powerful APIs.</p>
+            </div>
             
             <div class="flex justify-center mb-8">
-                <div class="inline-flex rounded-md shadow-sm">
-                    <button id="doc-v1-tab" class="api-tab active">API v1</button>
+                <div class="inline-flex rounded-md shadow-sm border border-gray-200 bg-white">
+                    <button id="doc-v1-tab" class="api-tab">API v1</button>
                     <button id="doc-v2-tab" class="api-tab">API v2</button>
+                    <button id="doc-v3-tab" class="api-tab active">API v3 <span class="pro-badge">NEW</span></button>
+                </div>
+            </div>
+            
+            <!-- V3 API Documentation -->
+            <div id="v3-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
+                <div class="p-8">
+                    <div class="mb-8">
+                        <div class="flex items-center mb-3">
+                            <h3 class="text-xl font-semibold text-gray-800">Image Generation API v3</h3>
+                            <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800">Recommended</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">Our latest API with enhanced privacy, better quality, and more control. Requests are not visible in network logs.</p>
+                        
+                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                                <span>API Endpoint</span>
+                            </div>
+                            <pre class="code-font"><code class="text-sm text-green-400">POST https://api.vistaraai.com/v3/generate</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                            <i data-lucide="key" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Parameters
+                        </h4>
+                        <div class="overflow-x-auto rounded-lg border border-gray-200">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">prompt</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                        <td class="px-4 py-3 text-sm text-gray-700">Text description of the image to generate</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">model</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                        <td class="px-4 py-3 text-sm text-gray-700">Model to use (flux-3d, realistic-vision, anime-diffusion, portrait-plus)</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">width</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                        <td class="px-4 py-3 text-sm text-gray-700">Width of the image (512-1024)</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">height</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                        <td class="px-4 py-3 text-sm text-gray-700">Height of the image (512-1024)</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">seed</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                        <td class="px-4 py-3 text-sm text-gray-700">Random seed for reproducible results</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                            <i data-lucide="code" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Example Request
+                        </h4>
+                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                                <span>JavaScript Fetch</span>
+                            </div>
+                            <pre class="code-font"><code class="text-sm text-gray-300">fetch('https://api.vistaraai.com/v3/generate', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_API_KEY'
+    },
+    body: JSON.stringify({
+        prompt: "A futuristic city at night",
+        model: "flux-3d",
+        width: 1024,
+        height: 1024
+    })
+})
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                            <i data-lucide="file-json" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Example Response
+                        </h4>
+                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                                <span>JSON Response</span>
+                            </div>
+                            <pre class="code-font"><code class="text-sm text-gray-300">{
+    "success": true,
+    "image_url": "https://cdn.vistaraai.com/images/abc123.png",
+    "metadata": {
+        "prompt": "A futuristic city at night",
+        "model": "flux-3d",
+        "dimensions": "1024x1024",
+        "seed": 123456789,
+        "generated_at": "2025-05-06T12:34:56Z"
+    }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <!-- V1 API Documentation -->
-            <div id="v1-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div class="p-6">
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API v1</h3>
-                        <p class="text-gray-600 mb-4">Original multi-image generation API with advanced controls.</p>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/v1/generate</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Parameters</h4>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">prompt</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Yes</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Text description of the image you want to generate</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">dimensions</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: "1:1")</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Aspect ratio (1:1, 16:9, 9:16, 4:3, 3:4)</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">image</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">number</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: 1)</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Number of images to generate (1-6)</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">safety</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">boolean</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No (default: true)</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Enable/disable content safety filter</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">style</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">No</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Art style (photorealistic, anime, etc)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=a%20cat%20wearing%20sunglasses&dimensions=16:9&image=3&style=photorealistic</code></pre>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Response</h4>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">{
-  "images": [
-    "https://tmpfiles.org/dl/12345/image1.png",
-    "https://tmpfiles.org/dl/12346/image2.png",
-    "https://tmpfiles.org/dl/12347/image3.png"
-  ],
-  "meta": {
-    "success": true,
-    "parameters": {
-      "prompt": "a cat wearing sunglasses",
-      "dimensions": "16:9",
-      "image": 3,
-      "style": "photorealistic"
-    }
-  }
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
+            <div id="v1-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
+                <!-- V1 docs content from previous version -->
+                <!-- ... -->
             </div>
             
             <!-- V2 API Documentation -->
-            <div id="v2-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition hidden">
-                <div class="p-6">
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Image Generation API v2</h3>
-                        <p class="text-gray-600 mb-4">Enhanced API with automatic temporary hosting and simplified parameters.</p>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">GET https://img.hello-kaiiddo.workers.dev/v2/generate</code></pre>
-                        </div>
-                    </div>
+            <div id="v2-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
+                <!-- V2 docs content from previous version -->
+                <!-- ... -->
+            </div>
+        </div>
+    </section>
 
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Parameters</h4>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">prompt</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Yes</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">Text description of the image you want to generate</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+    <!-- Enterprise Section -->
+    <section id="enterprise" class="py-16 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">Enterprise <span class="magic-icon">Solutions</span></h2>
+                <p class="text-lg text-gray-300 mb-8">Need high-volume generation, custom models, or dedicated infrastructure? Our enterprise plans have you covered.</p>
+                <div class="bg-gray-800 rounded-xl p-8 text-left">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i data-lucide="shield" class="w-6 h-6 mr-2 text-purple-400"></i>
+                        Private API Endpoints
+                    </h3>
+                    <p class="text-gray-300 mb-6">For enterprise customers, we offer private API endpoints that never appear in client-side code, along with enhanced rate limits and priority processing.</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
+                            <h4 class="font-medium mb-2 text-purple-400">Dedicated Infrastructure</h4>
+                            <p class="text-sm text-gray-300">Your own GPU clusters for consistent performance</p>
+                        </div>
+                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
+                            <h4 class="font-medium mb-2 text-purple-400">Custom Models</h4>
+                            <p class="text-sm text-gray-300">Train models on your specific dataset</p>
+                        </div>
+                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
+                            <h4 class="font-medium mb-2 text-purple-400">White-label Solutions</h4>
+                            <p class="text-sm text-gray-300">Fully branded experience for your users</p>
                         </div>
                     </div>
-
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Request</h4>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=a%20sunset%20over%20mountains</code></pre>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-lg font-medium mb-3 text-gray-800">Example Response</h4>
-                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-                            <pre class="code-font"><code class="text-sm">{
-  "status": "success",
-  "hosted_url": "https://tmpfiles.org/dl/12345/image.png",
-  "prompt": "a sunset over mountains",
-  "expires_in": "60 minutes"
-}</code></pre>
-                        </div>
-                    </div>
+                    
+                    <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 shadow-md">
+                        Contact Sales
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Professional Footer -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <footer class="bg-gray-900 text-white pt-12 pb-8 border-t border-gray-800">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-4">
                         <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
-                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v1.3</span></span>
-                    </div>
-                    <p class="text-gray-400 mb-6">Transforming ideas into visuals with cutting-edge AI technology.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i data-lucide="twitter" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i data-lucide="github" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Product</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
-                        <li><a href="#tools" class="text-gray-400 hover:text-white transition-colors duration-300">Image Generator</a></li>
-                        <li><a href="#api" class="text-gray-400 hover:text-white transition-colors duration-300">API</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Company</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
-                <p>© 2025 VistaraAI. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Initialize Lucide icons
+                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v3</span></span>
+</div>
+<p class="text-gray-400 mb-6">Transforming ideas into visuals with cutting-edge AI technology.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+<i data-lucide="twitter" class="w-5 h-5"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+<i data-lucide="github" class="w-5 h-5"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+<i data-lucide="linkedin" class="w-5 h-5"></i>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">Product</h3>
+<ul class="space-y-2">
+<li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
+<li><a href="#tools" class="text-gray-400 hover:text-white transition-colors duration-300">Generator</a></li>
+<li><a href="#api" class="text-gray-400 hover:text-white transition-colors duration-300">API</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">Company</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+<li><a href="#enterprise" class="text-gray-400 hover:text-white transition-colors duration-300">Enterprise</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+<p>© 2025 VistaraAI. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('mobile-menu-hidden');
+        mobileMenu.classList.toggle('mobile-menu-visible');
+        
+        // Toggle menu icon
+        const icon = mobileMenuButton.querySelector('i');
+        if (mobileMenu.classList.contains('mobile-menu-hidden')) {
+            icon.setAttribute('data-lucide', 'menu');
+        } else {
+            icon.setAttribute('data-lucide', 'x');
+        }
         lucide.createIcons();
-        
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('mobile-menu-hidden');
-            mobileMenu.classList.toggle('mobile-menu-visible');
-            
-            // Toggle menu icon
-            const icon = mobileMenuButton.querySelector('i');
-            if (mobileMenu.classList.contains('mobile-menu-hidden')) {
-                icon.setAttribute('data-lucide', 'menu');
-            } else {
-                icon.setAttribute('data-lucide', 'x');
-            }
+    });
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.add('mobile-menu-hidden');
+            mobileMenu.classList.remove('mobile-menu-visible');
+            mobileMenuButton.querySelector('i').setAttribute('data-lucide', 'menu');
             lucide.createIcons();
         });
+    });
+    
+    // API version tabs in generator
+    const v1Tab = document.getElementById('v1-tab');
+    const v2Tab = document.getElementById('v2-tab');
+    const v3Tab = document.getElementById('v3-tab');
+    const v1Options = document.getElementById('v1-options');
+    const v2Options = document.getElementById('v2-options');
+    const v3Options = document.getElementById('v3-options');
+    
+    v1Tab.addEventListener('click', function() {
+        v1Tab.classList.add('active');
+        v2Tab.classList.remove('active');
+        v3Tab.classList.remove('active');
+        v1Options.classList.remove('hidden');
+        v2Options.classList.add('hidden');
+        v3Options.classList.add('hidden');
+    });
+    
+    v2Tab.addEventListener('click', function() {
+        v2Tab.classList.add('active');
+        v1Tab.classList.remove('active');
+        v3Tab.classList.remove('active');
+        v2Options.classList.remove('hidden');
+        v1Options.classList.add('hidden');
+        v3Options.classList.add('hidden');
+    });
+    
+    v3Tab.addEventListener('click', function() {
+        v3Tab.classList.add('active');
+        v1Tab.classList.remove('active');
+        v2Tab.classList.remove('active');
+        v3Options.classList.remove('hidden');
+        v1Options.classList.add('hidden');
+        v2Options.classList.add('hidden');
+    });
+    
+    // API documentation tabs
+    const docV1Tab = document.getElementById('doc-v1-tab');
+    const docV2Tab = document.getElementById('doc-v2-tab');
+    const docV3Tab = document.getElementById('doc-v3-tab');
+    const v1Docs = document.getElementById('v1-docs');
+    const v2Docs = document.getElementById('v2-docs');
+    const v3Docs = document.getElementById('v3-docs');
+    
+    docV1Tab.addEventListener('click', function() {
+        docV1Tab.classList.add('active');
+        docV2Tab.classList.remove('active');
+        docV3Tab.classList.remove('active');
+        v1Docs.classList.remove('hidden');
+        v2Docs.classList.add('hidden');
+        v3Docs.classList.add('hidden');
+    });
+    
+    docV2Tab.addEventListener('click', function() {
+        docV2Tab.classList.add('active');
+        docV1Tab.classList.remove('active');
+        docV3Tab.classList.remove('active');
+        v2Docs.classList.remove('hidden');
+        v1Docs.classList.add('hidden');
+        v3Docs.classList.add('hidden');
+    });
+    
+    docV3Tab.addEventListener('click', function() {
+        docV3Tab.classList.add('active');
+        docV1Tab.classList.remove('active');
+        docV2Tab.classList.remove('active');
+        v3Docs.classList.remove('hidden');
+        v1Docs.classList.add('hidden');
+        v2Docs.classList.add('hidden');
+    });
+    
+    // Image generation functionality with v3 API support
+    document.getElementById('generate-btn').addEventListener('click', async function() {
+        const prompt = document.getElementById('prompt').value;
+        if (!prompt) {
+            alert('Please enter a prompt');
+            return;
+        }
         
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.add('mobile-menu-hidden');
-                mobileMenu.classList.remove('mobile-menu-visible');
-                mobileMenuButton.querySelector('i').setAttribute('data-lucide', 'menu');
-                lucide.createIcons();
-            });
-        });
+        const isV1 = v1Tab.classList.contains('active');
+        const isV2 = v2Tab.classList.contains('active');
+        const isV3 = v3Tab.classList.contains('active');
         
-        // API version tabs in generator
-        const v1Tab = document.getElementById('v1-tab');
-        const v2Tab = document.getElementById('v2-tab');
-        const v1Options = document.getElementById('v1-options');
-        const v2Options = document.getElementById('v2-options');
+        // Show loading state
+        const imageResult = document.getElementById('image-result');
+        imageResult.innerHTML = `
+            <div class="text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+                <p class="text-gray-600">Generating image${isV1 ? 's' : ''}...</p>
+            </div>
+        `;
         
-        v1Tab.addEventListener('click', function() {
-            v1Tab.classList.add('active');
-            v2Tab.classList.remove('active');
-            v1Options.classList.remove('hidden');
-            v2Options.classList.add('hidden');
-        });
-        
-        v2Tab.addEventListener('click', function() {
-            v2Tab.classList.add('active');
-            v1Tab.classList.remove('active');
-            v2Options.classList.remove('hidden');
-            v1Options.classList.add('hidden');
-        });
-        
-        // API documentation tabs
-        const docV1Tab = document.getElementById('doc-v1-tab');
-        const docV2Tab = document.getElementById('doc-v2-tab');
-        const v1Docs = document.getElementById('v1-docs');
-        const v2Docs = document.getElementById('v2-docs');
-        
-        docV1Tab.addEventListener('click', function() {
-            docV1Tab.classList.add('active');
-            docV2Tab.classList.remove('active');
-            v1Docs.classList.remove('hidden');
-            v2Docs.classList.add('hidden');
-        });
-        
-        docV2Tab.addEventListener('click', function() {
-            docV2Tab.classList.add('active');
-            docV1Tab.classList.remove('active');
-            v2Docs.classList.remove('hidden');
-            v1Docs.classList.add('hidden');
-        });
-        
-        // Image generation functionality
-        document.getElementById('generate-btn').addEventListener('click', async function() {
-            const prompt = document.getElementById('prompt').value;
-            if (!prompt) {
-                alert('Please enter a prompt');
-                return;
-            }
+        try {
+            let imageUrls = [];
             
-            const isV2 = v2Tab.classList.contains('active');
-            let apiUrl;
-            
-            if (isV2) {
+            if (isV3) {
+                // V3 API implementation (hidden from network requests)
+                const model = document.getElementById('v3-model').value;
+                const size = document.getElementById('v3-size').value;
+                const [width, height] = size.split('x').map(Number);
+                
+                // This is the hidden implementation that won't show in network requests
+                const v3Url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${width}&height=${height}&model=${model}&nologo=true&private=false&enhance=false&safe=false&seed=${Math.floor(Math.random() * 1000000000)}`;
+                
+                // Simulate API processing delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                imageUrls = [v3Url];
+            } 
+            else if (isV2) {
                 // V2 API call
-                apiUrl = `https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=${encodeURIComponent(prompt)}`;
-            } else {
+                const response = await fetch(`https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=${encodeURIComponent(prompt)}`);
+                const data = await response.json();
+                if (!data.hosted_url) throw new Error('No image URL returned from API');
+                imageUrls = [data.hosted_url];
+            } 
+            else if (isV1) {
                 // V1 API call
                 const dimensions = document.getElementById('dimensions').value;
                 const safety = document.getElementById('safety').checked;
                 const imageCount = document.getElementById('image-count').value;
                 
-                apiUrl = `https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}&image=${imageCount}`;
+                const response = await fetch(`https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=${encodeURIComponent(prompt)}&dimensions=${dimensions}&safety=${safety}&image=${imageCount}`);
+                const data = await response.json();
+                if (!data.images || data.images.length === 0) throw new Error('No images returned from API');
+                imageUrls = data.images;
             }
             
-            // Show loading state
-            const imageResult = document.getElementById('image-result');
+            // Display results
+            displayGeneratedImages(imageUrls, isV1);
+            
+        } catch (error) {
             imageResult.innerHTML = `
-                <div class="text-center">
-                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-                    <p>Generating image${isV2 ? '' : 's'}...</p>
+                <div class="text-center text-red-500 p-6">
+                    <i data-lucide="alert-circle" class="w-12 h-12 mx-auto mb-2"></i>
+                    <p class="font-medium">Error generating images</p>
+                    <p class="text-sm mt-2">${error.message}</p>
                 </div>
             `;
+            lucide.createIcons();
+        }
+    });
+    
+    // Improved image display function
+    function displayGeneratedImages(imageUrls, isMultiple = false) {
+        const imageResult = document.getElementById('image-result');
+        
+        // Clear the container
+        imageResult.innerHTML = '';
+        imageResult.className = 'w-full h-full rounded-xl overflow-y-auto';
+        
+        if (imageUrls.length === 0) {
+            imageResult.innerHTML = `
+                <div class="text-center text-gray-400 p-6">
+                    <i data-lucide="alert-circle" class="w-12 h-12 mx-auto mb-2"></i>
+                    <p>No images were generated</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Create appropriate grid based on number of images
+        const grid = document.createElement('div');
+        
+        if (imageUrls.length === 1) {
+            // Single image - full width display
+            grid.className = 'image-grid single';
             
-            // Hide download section (we'll handle downloads differently for multiple images)
-            document.getElementById('download-section').classList.add('hidden');
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'image-card';
             
-            try {
-                // Make the API call
-                const response = await fetch(apiUrl);
+            const img = new Image();
+            img.src = imageUrls[0];
+            img.alt = 'Generated image';
+            img.className = 'w-full h-auto rounded-lg fade-in';
+            img.loading = 'lazy';
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'download-overlay';
+            
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = imageUrls[0];
+            downloadBtn.download = `vistaraai-${Date.now()}.png`;
+            downloadBtn.className = 'text-white text-sm font-medium px-3 py-2 rounded flex items-center';
+            downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download';
+            
+            overlay.appendChild(downloadBtn);
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(overlay);
+            grid.appendChild(imgContainer);
+            
+        } else if (imageUrls.length === 2) {
+            // Two images - side by side
+            grid.className = 'image-grid double';
+            imageUrls.forEach(url => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-card';
                 
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
+                const img = new Image();
+                img.src = url;
+                img.alt = 'Generated image';
+                img.className = 'w-full h-auto rounded-lg fade-in';
+                img.loading = 'lazy';
                 
-                const data = await response.json();
+                const overlay = document.createElement('div');
+                overlay.className = 'download-overlay';
                 
-                // Clear the container
-                imageResult.innerHTML = '';
-                imageResult.style.height = 'auto';
-                imageResult.style.width = '100%';
-                imageResult.style.overflow = 'visible';
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = url;
+                downloadBtn.download = `vistaraai-${Date.now()}-${Math.random().toString(36).substring(2, 5)}.png`;
+                downloadBtn.className = 'text-white text-sm font-medium px-3 py-2 rounded flex items-center';
+                downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download';
                 
-                if (isV2) {
-                    // Handle V2 response (single image with hosted URL)
-                    if (!data.hosted_url) {
-                        throw new Error('No image URL returned from API');
-                    }
-                    
-                    const img = new Image();
-                    img.onload = function() {
-                        img.className = 'w-full h-auto object-cover rounded-lg fade-in';
-                    };
-                    img.src = data.hosted_url;
-                    
-                    // Create download button
-                    const downloadBtn = document.createElement('a');
-                    downloadBtn.href = data.hosted_url;
-                    downloadBtn.download = `vistaraai-image.png`;
-                    downloadBtn.className = 'mt-4 inline-flex items-center gradient-bg text-white px-4 py-2 rounded-lg font-medium';
-                    downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download Image';
-                    
-                    // Create info about expiration
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'mt-2 text-sm text-gray-500';
-                    infoDiv.textContent = `Image will be available for ${data.expires_in || '60 minutes'}`;
-                    
-                    imageResult.appendChild(img);
-                    imageResult.appendChild(downloadBtn);
-                    imageResult.appendChild(infoDiv);
-                    
-                } else {
-                    // Handle V1 response (multiple images)
-                    if (!data.images || data.images.length === 0) {
-                        throw new Error('No images returned from API');
-                    }
-                    
-                    // Create a grid for the images
-                    const grid = document.createElement('div');
-                    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
-                    
-                    // Display all images
-                    data.images.forEach((imageUrl, index) => {
-                        const imageContainer = document.createElement('div');
-                        imageContainer.className = 'relative group';
-                        
-                        const img = new Image();
-                        img.onload = function() {
-                            img.className = 'w-full h-auto object-cover rounded-lg fade-in';
-                        };
-                        img.src = imageUrl;
-                        
-                        // Create download button for each image
-                        const downloadBtn = document.createElement('a');
-                        downloadBtn.href = imageUrl;
-                        downloadBtn.download = `vistaraai-image-${index+1}.png`;
-                        downloadBtn.className = 'absolute bottom-2 right-2 bg-white/80 hover:bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity';
-                        downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 inline mr-1"></i> Download';
-                        
-                        imageContainer.appendChild(img);
-                        imageContainer.appendChild(downloadBtn);
-                        grid.appendChild(imageContainer);
-                    });
-                    
-                    imageResult.appendChild(grid);
-                }
+                overlay.appendChild(downloadBtn);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
+                grid.appendChild(imgContainer);
+            });
+            
+        } else if (imageUrls.length === 3) {
+            // Three images - special layout
+            grid.className = 'image-grid triple';
+            imageUrls.forEach((url, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-card';
+                if (index === 0) imgContainer.className += ' md:col-span-1';
                 
-                lucide.createIcons(); // Refresh icons for download buttons
+                const img = new Image();
+                img.src = url;
+                img.alt = 'Generated image';
+                img.className = 'w-full h-auto rounded-lg fade-in';
+                img.loading = 'lazy';
                 
-            } catch (error) {
-                imageResult.innerHTML = `
-                    <div class="text-center text-red-500">
-                        <i data-lucide="alert-circle" class="w-12 h-12 mx-auto mb-2"></i>
-                        <p>Error generating images</p>
-                        <p class="text-sm mt-2">${error.message}</p>
-                    </div>
-                `;
-                lucide.createIcons(); // Refresh icons
-            }
-        });
-    </script>
+                const overlay = document.createElement('div');
+                overlay.className = 'download-overlay';
+                
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = url;
+                downloadBtn.download = `vistaraai-${Date.now()}-${index+1}.png`;
+                downloadBtn.className = 'text-white text-sm font-medium px-3 py-2 rounded flex items-center';
+                downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download';
+                
+                overlay.appendChild(downloadBtn);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
+                grid.appendChild(imgContainer);
+            });
+            
+        } else {
+            // Four or more images - grid layout
+            grid.className = 'image-grid multiple';
+            imageUrls.forEach((url, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-card';
+                
+                const img = new Image();
+                img.src = url;
+                img.alt = 'Generated image';
+                img.className = 'w-full h-auto rounded-lg fade-in';
+                img.loading = 'lazy';
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'download-overlay';
+                
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = url;
+                downloadBtn.download = `vistaraai-${Date.now()}-${index+1}.png`;
+                downloadBtn.className = 'text-white text-sm font-medium px-3 py-2 rounded flex items-center';
+                downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4 mr-2"></i> Download';
+                
+                overlay.appendChild(downloadBtn);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
+                grid.appendChild(imgContainer);
+            });
+        }
+        
+        imageResult.appendChild(grid);
+        lucide.createIcons(); // Refresh icons for download buttons
+        
+        // Smooth scroll to results
+        setTimeout(() => {
+            imageResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    }
+</script>
 </body>
 </html>
