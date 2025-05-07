@@ -263,126 +263,150 @@
     </section>
 
     <!-- Image Generation Tool -->
-    <section id="tools" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Generator</span>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">AI Image <span class="magic-icon">Generator</span></h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Create stunning visuals with our powerful image generation tool.</p>
-            </div>
-            
-            <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
-                <div class="md:flex">
-                    <div class="md:w-1/2 p-8 border-r border-gray-100">
-                        <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
-                            <i data-lucide="wand-2" class="w-5 h-5 mr-2 magic-icon"></i>
-                            Generation Settings
-                        </h3>
-                        <div class="space-y-6">
-                            <div>
-                                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-2">Describe your image</label>
-                                <textarea id="prompt" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="A beautiful landscape with mountains and a lake at sunset..."></textarea>
+<section id="tools" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Generator</span>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">AI Image <span class="magic-icon">Generator</span></h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Create stunning visuals with our powerful image generation tool.</p>
+        </div>
+        
+        <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8 border-r border-gray-100">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i data-lucide="wand-2" class="w-5 h-5 mr-2 magic-icon"></i>
+                        Generation Settings
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="prompt" class="block text-sm font-medium text-gray-700 mb-2">Describe your image</label>
+                            <textarea id="prompt" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="A beautiful landscape with mountains and a lake at sunset..."></textarea>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">API Version</label>
+                            <div class="flex space-x-4 mb-6">
+                                <button id="v1-tab" class="api-tab active">API v1</button>
+                                <button id="v2-tab" class="api-tab">API v2</button>
+                                <button id="v3-tab" class="api-tab">API v3</button>
                             </div>
                             
-                            <div class="border-t border-gray-100 pt-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">API Version</label>
-                                <div class="flex space-x-4 mb-6">
-                                    <button id="v1-tab" class="api-tab">API v1</button>
-                                    <button id="v2-tab" class="api-tab">API v2</button>
-                                    <button id="v3-tab" class="api-tab active">API v3 <span class="pro-badge">NEW</span></button>
-                                </div>
-                                
-                                <div id="v1-options" class="hidden space-y-6">
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-2">Aspect Ratio</label>
-                                            <select id="dimensions" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                                <option value="1:1">1:1 (Square)</option>
-                                                <option value="16:9">16:9 (Widescreen)</option>
-                                                <option value="9:16">9:16 (Portrait)</option>
-                                                <option value="4:3">4:3 (Standard)</option>
-                                                <option value="3:4">3:4 (Portrait)</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="image-count" class="block text-sm font-medium text-gray-700 mb-2">Image Count</label>
-                                            <select id="image-count" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
-                                        </div>
+                            <div id="v1-options" class="space-y-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-2">Aspect Ratio</label>
+                                        <select id="dimensions" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                            <option value="1:1">1:1 (Square)</option>
+                                            <option value="16:9">16:9 (Widescreen)</option>
+                                            <option value="9:16">9:16 (Portrait)</option>
+                                            <option value="4:3">4:3 (Standard)</option>
+                                            <option value="3:4">3:4 (Portrait)</option>
+                                        </select>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex items-center">
-                                                <input type="checkbox" id="safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
-                                                <label for="safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
-                                            </div>
-                                        </div>
+                                        <label for="image-count" class="block text-sm font-medium text-gray-700 mb-2">Image Count</label>
+                                        <select id="image-count" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
                                     </div>
                                 </div>
-                                
-                                <div id="v2-options" class="hidden">
-                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                        <p class="text-sm text-blue-800">API v2 provides simpler generation with automatic temporary hosting. For advanced controls, use API v1 or v3.</p>
-                                    </div>
+                                <div>
+                                    <label for="style" class="block text-sm font-medium text-gray-700 mb-2">Art Style</label>
+                                    <select id="style" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                        <option value="">Default</option>
+                                        <option value="photorealistic">Photorealistic</option>
+                                        <option value="anime">Anime</option>
+                                        <option value="painting">Painting</option>
+                                        <option value="digital-art">Digital Art</option>
+                                        <option value="pixel-art">Pixel Art</option>
+                                    </select>
                                 </div>
-                                
-                                <div id="v3-options" class="space-y-6">
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label for="v3-model" class="block text-sm font-medium text-gray-700 mb-2">Model</label>
-                                            <select id="v3-model" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                                <option value="flux-3d">Flux 3D</option>
-                                                <option value="realistic-vision">Realistic Vision</option>
-                                                <option value="anime-diffusion">Anime Diffusion</option>
-                                                <option value="portrait-plus">Portrait Plus</option>
-                                            </select>
+                            </div>
+                            
+                            <div id="v2-options" class="hidden space-y-6">
+                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                    <p class="text-sm text-blue-800">API v2 provides simpler generation with automatic temporary hosting. Just enter your prompt and generate!</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="v2-safety" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
+                                            <label for="v2-safety" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
                                         </div>
-                                        <div>
-                                            <label for="v3-size" class="block text-sm font-medium text-gray-700 mb-2">Size</label>
-                                            <select id="v3-size" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-                                                <option value="512x512">512×512</option>
-                                                <option value="768x768">768×768</option>
-                                                <option value="1024x1024" selected>1024×1024</option>
-                                                <option value="1024x576">Widescreen (1024×576)</option>
-                                                <option value="576x1024">Portrait (576×1024)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
-                                        <p class="text-sm text-purple-800 flex items-start">
-                                            <i data-lucide="info" class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0"></i>
-                                            <span>V3 API provides enhanced privacy with requests not visible in network logs, along with higher quality generation.</span>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
                             
-                            <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center shadow-md">
-                                <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
-                                Generate Image
-                            </button>
-                        </div>
-                    </div>
-                    <div class="md:w-1/2 bg-gray-50 p-8 flex flex-col">
-                        <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
-                            <i data-lucide="image" class="w-5 h-5 mr-2 text-purple-600"></i>
-                            Generated Results
-                        </h3>
-                        <div class="flex-1">
-                            <div id="image-container" class="relative h-full">
-                                <div id="image-result" class="w-full h-full image-placeholder rounded-xl flex items-center justify-center" style="min-height: 300px;">
-                                    <div class="text-center text-gray-400 p-6">
-                                        <i data-lucide="image" class="w-12 h-12 mx-auto mb-3"></i>
-                                        <p class="font-medium mb-1">No images generated yet</p>
-                                        <p class="text-sm max-w-xs mx-auto">Enter a prompt and click "Generate Image" to create stunning visuals</p>
+                            <div id="v3-options" class="hidden space-y-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="v3-width" class="block text-sm font-medium text-gray-700 mb-2">Width</label>
+                                        <input type="number" id="v3-width" value="1024" min="256" max="2048" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
                                     </div>
+                                    <div>
+                                        <label for="v3-height" class="block text-sm font-medium text-gray-700 mb-2">Height</label>
+                                        <input type="number" id="v3-height" value="1024" min="256" max="2048" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="v3-model" class="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                                    <select id="v3-model" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                                        <option value="flux">Flux</option>
+                                        <option value="realistic-vision">Realistic Vision</option>
+                                        <option value="anime-diffusion">Anime Diffusion</option>
+                                        <option value="portrait-plus">Portrait Plus</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="v3-negative-prompt" class="block text-sm font-medium text-gray-700 mb-2">Negative Prompt</label>
+                                    <input type="text" id="v3-negative-prompt" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Things to exclude from the image">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="v3-seed" class="block text-sm font-medium text-gray-700 mb-2">Seed (optional)</label>
+                                        <input type="number" id="v3-seed" class="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition" placeholder="Random number for consistency">
+                                    </div>
+                                    <div class="flex items-end">
+                                        <div class="flex items-center w-full">
+                                            <input type="checkbox" id="v3-safe" checked class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition">
+                                            <label for="v3-safe" class="ml-2 block text-sm text-gray-700">Safety Filter</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                                    <p class="text-sm text-purple-800 flex items-start">
+                                        <i data-lucide="info" class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0"></i>
+                                        <span>V3 API provides enhanced privacy with requests not visible in network logs, along with higher quality generation.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="generate-btn" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 w-full flex items-center justify-center shadow-md">
+                            <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                            Generate Image
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-gray-50 p-8 flex flex-col">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i data-lucide="image" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Generated Results
+                    </h3>
+                    <div class="flex-1">
+                        <div id="image-container" class="relative h-full">
+                            <div id="image-result" class="w-full h-full image-placeholder rounded-xl flex items-center justify-center" style="min-height: 300px;">
+                                <div class="text-center text-gray-400 p-6">
+                                    <i data-lucide="image" class="w-12 h-12 mx-auto mb-3"></i>
+                                    <p class="font-medium mb-1">No images generated yet</p>
+                                    <p class="text-sm max-w-xs mx-auto">Enter a prompt and click "Generate Image" to create stunning visuals</p>
                                 </div>
                             </div>
                         </div>
@@ -390,244 +414,578 @@
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <!-- API Documentation -->
-    <section id="api" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Developers</span>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">API <span class="magic-icon">Documentation</span></h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Integrate our image generation into your applications with our powerful APIs.</p>
-            </div>
-            
-            <div class="flex justify-center mb-8">
-                <div class="inline-flex rounded-md shadow-sm border border-gray-200 bg-white">
-                    <button id="doc-v1-tab" class="api-tab">API v1</button>
-                    <button id="doc-v2-tab" class="api-tab">API v2</button>
-                    <button id="doc-v3-tab" class="api-tab active">API v3 <span class="pro-badge">NEW</span></button>
-                </div>
-            </div>
-            
-            <!-- V3 API Documentation -->
-            <div id="v3-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
-                <div class="p-8">
-                    <div class="mb-8">
-                        <div class="flex items-center mb-3">
-                            <h3 class="text-xl font-semibold text-gray-800">Image Generation API v3</h3>
-                            <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800">Recommended</span>
-                        </div>
-                        <p class="text-gray-600 mb-6">Our latest API with enhanced privacy, better quality, and more control. Requests are not visible in network logs.</p>
-                        
-                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
-                            <div class="flex items-center text-sm text-gray-400 mb-2">
-                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
-                                <span>API Endpoint</span>
-                            </div>
-                            <pre class="code-font"><code class="text-sm text-green-400">POST https://api.vistaraai.com/v3/generate</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
-                            <i data-lucide="key" class="w-5 h-5 mr-2 text-purple-600"></i>
-                            Parameters
-                        </h4>
-                        <div class="overflow-x-auto rounded-lg border border-gray-200">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">prompt</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Yes</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Text description of the image to generate</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">model</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Model to use (flux-3d, realistic-vision, anime-diffusion, portrait-plus)</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">width</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Width of the image (512-1024)</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">height</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Height of the image (512-1024)</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">seed</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">integer</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">Random seed for reproducible results</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="mb-8">
-                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
-                            <i data-lucide="code" class="w-5 h-5 mr-2 text-purple-600"></i>
-                            Example Request
-                        </h4>
-                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
-                            <div class="flex items-center text-sm text-gray-400 mb-2">
-                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
-                                <span>JavaScript Fetch</span>
-                            </div>
-                            <pre class="code-font"><code class="text-sm text-gray-300">fetch('https://api.vistaraai.com/v3/generate', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_KEY'
-    },
-    body: JSON.stringify({
-        prompt: "A futuristic city at night",
-        model: "flux-3d",
-        width: 1024,
-        height: 1024
-    })
-})
-.then(response => response.json())
-.then(data => console.log(data));</code></pre>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
-                            <i data-lucide="file-json" class="w-5 h-5 mr-2 text-purple-600"></i>
-                            Example Response
-                        </h4>
-                        <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
-                            <div class="flex items-center text-sm text-gray-400 mb-2">
-                                <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
-                                <span>JSON Response</span>
-                            </div>
-                            <pre class="code-font"><code class="text-sm text-gray-300">{
-    "success": true,
-    "image_url": "https://cdn.vistaraai.com/images/abc123.png",
-    "metadata": {
-        "prompt": "A futuristic city at night",
-        "model": "flux-3d",
-        "dimensions": "1024x1024",
-        "seed": 123456789,
-        "generated_at": "2025-05-06T12:34:56Z"
-    }
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- V1 API Documentation -->
-            <div id="v1-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
-                <!-- V1 docs content from previous version -->
-                <!-- ... -->
-            </div>
-            
-            <!-- V2 API Documentation -->
-            <div id="v2-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
-                <!-- V2 docs content from previous version -->
-                <!-- ... -->
+<section id="api" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">Developers</span>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">API <span class="magic-icon">Documentation</span></h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Integrate our image generation into your applications with our powerful APIs.</p>
+        </div>
+        
+        <div class="flex justify-center mb-8">
+            <div class="inline-flex rounded-md shadow-sm border border-gray-200 bg-white">
+                <button id="doc-v1-tab" class="api-tab active">API v1</button>
+                <button id="doc-v2-tab" class="api-tab">API v2</button>
+                <button id="doc-v3-tab" class="api-tab">API v3</button>
             </div>
         </div>
-    </section>
+        
+        <!-- V1 API Documentation -->
+        <div id="v1-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100">
+            <div class="p-8">
+                <div class="mb-8">
+                    <div class="flex items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800">Image Generation API v1</h3>
+                        <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">Original</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Our original multi-image generation API with flexible options for aspect ratio and style.</p>
+                    
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>API Endpoint</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-green-400">GET https://img.hello-kaiiddo.workers.dev/v1/generate</code></pre>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="key" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Parameters
+                    </h4>
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">prompt</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Text description of desired image</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">image</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">number</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Model version (1-3)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">dimensions</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Aspect ratio (1:1, 16:9, 9:16, 4:3, 3:4)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">style</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Art style (photorealistic, anime, painting, digital-art, pixel-art)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="code" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Request
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JavaScript Fetch</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">fetch('https://img.hello-kaiiddo.workers.dev/v1/generate?prompt=a+sunset&style=photorealistic')
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="file-json" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Response
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JSON Response</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">{
+    "images": [
+        "https://example.com/image1.png",
+        "https://example.com/image2.png"
+    ],
+    "meta": {
+        "success": true,
+        "parameters": {
+            "prompt": "a sunset",
+            "style": "photorealistic"
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- V2 API Documentation -->
+        <div id="v2-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
+            <div class="p-8">
+                <div class="mb-8">
+                    <div class="flex items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800">Image Generation API v2</h3>
+                        <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Simple</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Simplified API with automatic temporary hosting of generated images.</p>
+                    
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>API Endpoint</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-green-400">GET https://img.hello-kaiiddo.workers.dev/v2/generate</code></pre>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="key" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Parameters
+                    </h4>
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">prompt</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Text description of desired image</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="code" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Request
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JavaScript Fetch</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">fetch('https://img.hello-kaiiddo.workers.dev/v2/generate?prompt=a+sunset')
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="file-json" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Response
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JSON Response</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">{
+    "status": "success",
+    "hosted_url": "https://tmpfiles.org/dl/12345/image.png",
+    "prompt": "a sunset",
+    "expires_in": "60 minutes"
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- V3 API Documentation -->
+        <div id="v3-docs" class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100 hidden">
+            <div class="p-8">
+                <div class="mb-8">
+                    <div class="flex items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800">Image Generation API v3</h3>
+                        <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800">Advanced</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Advanced API using pollinations.ai with human-like request patterns and enhanced privacy.</p>
+                    
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>API Endpoint</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-green-400">GET https://img.hello-kaiiddo.workers.dev/v3/generate</code></pre>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="key" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Parameters
+                    </h4>
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">prompt</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Yes</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Text description of desired image</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">width</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">number</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Image width (default: 1024)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">height</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">number</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Image height (default: 1024)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">model</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Model to use (flux, realistic-vision, anime-diffusion, portrait-plus)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">seed</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">number</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Random seed for reproducible results</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">negative_prompt</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">string</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">What to exclude from the image</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-800">safe</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">boolean</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">No</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">Enable safety filter (default: true)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="code" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Request
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JavaScript Fetch</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">fetch('https://img.hello-kaiiddo.workers.dev/v3/generate?prompt=a%20futuristic%20cityscape&width=1024&height=768&model=flux&seed=12345')
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-medium mb-4 text-gray-800 flex items-center">
+                        <i data-lucide="file-json" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        Example Response
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i>
+                            <span>JSON Response</span>
+                        </div>
+                        <pre class="code-font"><code class="text-sm text-gray-300">{
+    "status": "success",
+    "hosted_url": "https://tmpfiles.org/dl/12345/image.png",
+    "prompt": "a futuristic cityscape",
+    "expires_in": "60 minutes",
+    "content_type": "image/webp",
+    "size_bytes": 245678,
+    "parameters": {
+        "width": 1024,
+        "height": 768,
+        "model": "flux",
+        "seed": 12345
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Enterprise Section -->
-    <section id="enterprise" class="py-16 bg-gray-900 text-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold mb-6">Enterprise <span class="magic-icon">Solutions</span></h2>
-                <p class="text-lg text-gray-300 mb-8">Need high-volume generation, custom models, or dedicated infrastructure? Our enterprise plans have you covered.</p>
-                <div class="bg-gray-800 rounded-xl p-8 text-left">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-lucide="shield" class="w-6 h-6 mr-2 text-purple-400"></i>
-                        Private API Endpoints
-                    </h3>
-                    <p class="text-gray-300 mb-6">For enterprise customers, we offer private API endpoints that never appear in client-side code, along with enhanced rate limits and priority processing.</p>
-                    
-                    <div class="grid md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
-                            <h4 class="font-medium mb-2 text-purple-400">Dedicated Infrastructure</h4>
-                            <p class="text-sm text-gray-300">Your own GPU clusters for consistent performance</p>
-                        </div>
-                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
-                            <h4 class="font-medium mb-2 text-purple-400">Custom Models</h4>
-                            <p class="text-sm text-gray-300">Train models on your specific dataset</p>
-                        </div>
-                        <div class="bg-gray-700 p-5 rounded-lg border border-gray-600">
-                            <h4 class="font-medium mb-2 text-purple-400">White-label Solutions</h4>
-                            <p class="text-sm text-gray-300">Fully branded experience for your users</p>
-                        </div>
+<section id="enterprise" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 mb-4">For Businesses</span>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Enterprise <span class="magic-icon">Solutions</span></h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Scale your creative capabilities with our high-performance AI infrastructure and custom solutions.</p>
+        </div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-lg text-purple-600 mr-4">
+                        <i data-lucide="server" class="w-6 h-6"></i>
                     </div>
-                    
-                    <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition transform hover:-translate-y-1 shadow-md">
-                        Contact Sales
-                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Dedicated Infrastructure</h3>
+                        <p class="text-gray-600">Exclusive GPU clusters with guaranteed uptime and predictable performance for your high-volume workloads.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-lg text-purple-600 mr-4">
+                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Custom Model Training</h3>
+                        <p class="text-gray-600">Tailor AI models to your brand's unique style and requirements with our proprietary fine-tuning platform.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-lg text-purple-600 mr-4">
+                        <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Private API Endpoints</h3>
+                        <p class="text-gray-600">Isolated infrastructure with enhanced security, custom rate limits, and priority processing.</p>
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <button class="relative group gradient-bg text-white px-8 py-4 rounded-xl font-medium hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <span class="relative z-10 flex items-center">
+                            Request Enterprise Demo
+                            <i data-lucide="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     </button>
                 </div>
             </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Enterprise Features</h3>
+                    <p class="text-gray-600">Everything you need to scale AI-powered creativity across your organization.</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-purple-300 transition">
+                        <div class="bg-white p-2 rounded-lg shadow-sm mr-4">
+                            <i data-lucide="zap" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">High Volume Processing</h4>
+                            <p class="text-sm text-gray-600">Millions of images per month with SLA-backed reliability</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-purple-300 transition">
+                        <div class="bg-white p-2 rounded-lg shadow-sm mr-4">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">White-label Solutions</h4>
+                            <p class="text-sm text-gray-600">Fully branded experience with your logo and color scheme</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-purple-300 transition">
+                        <div class="bg-white p-2 rounded-lg shadow-sm mr-4">
+                            <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Dedicated Support</h4>
+                            <p class="text-sm text-gray-600">24/7 technical support with dedicated account manager</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-purple-300 transition">
+                        <div class="bg-white p-2 rounded-lg shadow-sm mr-4">
+                            <i data-lucide="lock" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Advanced Security</h4>
+                            <p class="text-sm text-gray-600">SOC 2 compliance and private cloud deployment options</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Professional Footer -->
-    <footer class="bg-gray-900 text-white pt-12 pb-8 border-t border-gray-800">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i data-lucide="sparkles" class="w-8 h-8 magic-icon"></i>
-                        <span class="text-2xl font-bold">Vistara<span class="magic-icon">AI</span> <span class="version-badge">v3</span></span>
-</div>
-<p class="text-gray-400 mb-6">Transforming ideas into visuals with cutting-edge AI technology.</p>
-<div class="flex space-x-4">
-<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-<i data-lucide="twitter" class="w-5 h-5"></i>
-</a>
-<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-<i data-lucide="github" class="w-5 h-5"></i>
-</a>
-<a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-<i data-lucide="linkedin" class="w-5 h-5"></i>
-</a>
-</div>
-</div>
-<div>
-<h3 class="text-lg font-semibold mb-4">Product</h3>
-<ul class="space-y-2">
-<li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
-<li><a href="#tools" class="text-gray-400 hover:text-white transition-colors duration-300">Generator</a></li>
-<li><a href="#api" class="text-gray-400 hover:text-white transition-colors duration-300">API</a></li>
-</ul>
-</div>
-<div>
-<h3 class="text-lg font-semibold mb-4">Company</h3>
-<ul class="space-y-2">
-<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
-<li><a href="#enterprise" class="text-gray-400 hover:text-white transition-colors duration-300">Enterprise</a></li>
-<li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
-</ul>
-</div>
-</div>
-<div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
-<p>© 2025 VistaraAI. All rights reserved.</p>
-</div>
-</div>
+   <!-- Professional Corporate Footer -->
+<footer class="bg-gray-900 text-gray-300 pt-20 pb-8">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-16">
+            <!-- Company Info -->
+            <div class="md:col-span-4">
+                <div class="flex items-center mb-6">
+                    <i data-lucide="sparkles" class="w-9 h-9 text-purple-400 mr-3"></i>
+                    <span class="text-2xl font-bold text-white">Vistara<span class="text-purple-400">AI</span></span>
+                </div>
+                <p class="text-gray-400 mb-8 max-w-sm leading-relaxed">Enterprise-grade AI solutions powering the next generation of digital creativity.</p>
+                
+                <div class="flex space-x-5 mb-8">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover:-translate-y-0.5">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover:-translate-y-0.5">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover:-translate-y-0.5">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover:-translate-y-0.5">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="flex items-start border-t border-gray-800 pt-6">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-purple-400 mr-3 mt-1 flex-shrink-0"></i>
+                    <address class="not-italic text-gray-400">
+                        <p class="font-medium text-white text-sm uppercase tracking-wider mb-1">Global Headquarters</p>
+                        <p class="mb-1">VistaraAI Technologies Pvt. Ltd.</p>
+                        <p class="mb-1">TechOne Park, Block B</p>
+                        <p>Gujarat 360001, India</p>
+                    </address>
+                </div>
+            </div>
+
+            <!-- Solutions -->
+            <div class="md:col-span-2 md:col-start-6">
+                <h3 class="text-white font-semibold text-lg mb-6 uppercase tracking-wider border-b border-gray-800 pb-3">Solutions</h3>
+                <ul class="space-y-3.5">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        AI Generation
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Enterprise API
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Custom Models
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        White Label
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- Company -->
+            <div class="md:col-span-2">
+                <h3 class="text-white font-semibold text-lg mb-6 uppercase tracking-wider border-b border-gray-800 pb-3">Company</h3>
+                <ul class="space-y-3.5">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        About Us
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Leadership
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Careers
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Newsroom
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div class="md:col-span-2">
+                <h3 class="text-white font-semibold text-lg mb-6 uppercase tracking-wider border-b border-gray-800 pb-3">Resources</h3>
+                <ul class="space-y-3.5">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Documentation
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        API Reference
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Blog
+                    </a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-start">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400 mr-2 mt-0.5 flex-shrink-0"></i>
+                        Support
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm order-2 md:order-1 mt-4 md:mt-0">
+                © 2025 VistaraAI Technologies Pvt. Ltd. All rights reserved.
+            </p>
+            
+            <div class="order-1 md:order-2 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-8">
+                <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                    <i data-lucide="coffee" class="w-4 h-4"></i>
+                    <span>Made with coffee by Kaiiddo</span>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">GDPR</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
 <script>
     // Initialize Lucide icons
