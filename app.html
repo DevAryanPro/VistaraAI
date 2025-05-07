@@ -154,9 +154,49 @@
         .image-card:hover .download-overlay {
             transform: translateY(0);
         }
+        /* Disable text selection */
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Custom scrollbar for context menu */
+  .custom-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+  }
+  
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 3px;
+  }
+  
+  /* Context menu styling */
+  #custom-context-menu {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  #custom-context-menu li {
+    transition: background-color 0.15s ease;
+  }
+  
+  #custom-context-menu li:not(.border-t):hover {
+    background-color: #f9fafb;
+  }
     </style>
 </head>
 <body class="min-h-screen">
+
+
     <!-- Navigation -->
     <nav class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -632,7 +672,7 @@
                         <h3 class="text-xl font-semibold text-gray-800">Image Generation API v3</h3>
                         <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800">Advanced</span>
                     </div>
-                    <p class="text-gray-600 mb-6">Advanced API using our api with human-like request patterns and enhanced privacy.</p>
+                    <p class="text-gray-600 mb-6">Advanced API using pollinations.ai with human-like request patterns and enhanced privacy.</p>
                     
                     <div class="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto">
                         <div class="flex items-center text-sm text-gray-400 mb-2">
@@ -987,9 +1027,107 @@
         </div>
     </div>
 </footer>
+
+<!-- HTML -->
+<div id="custom-context-menu" class="hidden fixed bg-white shadow-xl rounded-md border border-gray-200 w-56 z-[9999] py-1">
+    <ul class="overflow-y-auto max-h-[70vh] custom-scroll">
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-gray-800">
+        <i data-lucide="copy" class="w-4 h-4 mr-3 text-gray-500"></i>
+        Copy
+      </li>
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-gray-800">
+        <i data-lucide="clipboard" class="w-4 h-4 mr-3 text-gray-500"></i>
+        Paste
+      </li>
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-gray-800">
+        <i data-lucide="scissors" class="w-4 h-4 mr-3 text-gray-500"></i>
+        Cut
+      </li>
+      <li class="border-t border-gray-200 my-1"></li>
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-gray-800">
+        <i data-lucide="refresh-cw" class="w-4 h-4 mr-3 text-gray-500"></i>
+        Refresh
+      </li>
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-gray-800">
+        <i data-lucide="external-link" class="w-4 h-4 mr-3 text-gray-500"></i>
+        Open in new tab
+      </li>
+      <li class="border-t border-gray-200 my-1"></li>
+      <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-red-500">
+        <i data-lucide="trash-2" class="w-4 h-4 mr-3"></i>
+        Delete
+      </li>
+    </ul>
+  </div>
+
 <script>
     // Initialize Lucide icons
     lucide.createIcons();
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const contextMenu = document.getElementById('custom-context-menu');
+  const menuItems = contextMenu.querySelectorAll('li:not(.border-t)');
+  
+  // Show custom context menu with perfect positioning
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    
+    // Calculate position with boundary checks
+    const x = Math.min(
+      e.clientX,
+      window.innerWidth - contextMenu.offsetWidth - 5
+    );
+    
+    const y = Math.min(
+      e.clientY,
+      window.innerHeight - contextMenu.offsetHeight - 5
+    );
+    
+    contextMenu.style.left = `${x}px`;
+    contextMenu.style.top = `${y}px`;
+    contextMenu.classList.remove('hidden');
+    
+    // Close when clicking elsewhere
+    const closeMenu = (e) => {
+      if (!contextMenu.contains(e.target)) {
+        contextMenu.classList.add('hidden');
+        document.removeEventListener('click', closeMenu);
+        document.removeEventListener('contextmenu', closeMenu);
+      }
+    };
+    
+    setTimeout(() => {
+      document.addEventListener('click', closeMenu);
+      document.addEventListener('contextmenu', closeMenu);
+    }, 10);
+  });
+  
+  // Menu item actions
+  const actions = {
+    copy: () => console.log('Copy action'),
+    paste: () => console.log('Paste action'),
+    cut: () => console.log('Cut action'),
+    refresh: () => window.location.reload(),
+    openNewTab: () => console.log('Open in new tab'),
+    delete: () => console.log('Delete action')
+  };
+  
+  // Attach click handlers
+  menuItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+      const actionKeys = Object.keys(actions);
+      if (index < actionKeys.length) {
+        actions[actionKeys[index]]();
+      }
+      contextMenu.classList.add('hidden');
+    });
+  });
+  
+  // Initialize Lucide icons if available
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+});
     
     // Mobile menu toggle
     const mobileMenuButton = document.getElementById('mobile-menu-button');
