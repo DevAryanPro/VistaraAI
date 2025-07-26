@@ -320,10 +320,14 @@
             }
         });
         
-        document.getElementById('image-generation-form').addEventListener('submit', async function(e) {
+      document.getElementById('image-generation-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    
+    // Get form values
+    const prompt = document.getElementById('prompt').value;
+    const negativePrompt = document.getElementById('negative-prompt').value;
+    const style = document.getElementById('style').value;
+    const aspectRatio = document.getElementById('aspect-ratio').value;
     
     // Validate prompt
     if (!prompt.trim()) {
@@ -368,6 +372,9 @@
         generatedImage.src = data.image_url;
         downloadLink.href = data.image_url;
         resultContainer.classList.remove('hidden');
+        
+        // Scroll to results
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
       } else {
         alert('Failed to generate image: ' + data.message);
       }
