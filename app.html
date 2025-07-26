@@ -199,7 +199,7 @@
             Describe your image
           </label>
           <div class="mt-2">
-            <textarea id="prompt" name="prompt" rows="4" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style"></textarea>
+            <textarea id="prompt" name="prompt" rows="4" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style">A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style</textarea>
           </div>
         </div>
 
@@ -210,7 +210,7 @@
             Negative prompt (Optional)
           </label>
           <div class="mt-2">
-            <input type="text" id="negative-prompt" name="negative-prompt" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="blurry, low quality, distorted faces, poor lighting">
+            <input type="text" id="negative-prompt" name="negative-prompt" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="blurry, low quality, distorted faces, poor lighting" value="blurry, low quality, distorted faces, poor lighting">
           </div>
         </div>
 
@@ -223,7 +223,7 @@
             </label>
             <div class="mt-2">
               <select id="style" name="style" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="neon-punk">Neon Punk</option>
+                <option value="neon-punk" selected>Neon Punk</option>
                 <option value="digital-art">Digital Art</option>
                 <option value="oil-painting">Oil Painting</option>
                 <option value="anime">Anime</option>
@@ -240,7 +240,7 @@
             </label>
             <div class="mt-2">
               <select id="aspect-ratio" name="aspect-ratio" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="16:9">16:9 (Widescreen)</option>
+                <option value="16:9" selected>16:9 (Widescreen)</option>
                 <option value="1:1">1:1 (Square)</option>
                 <option value="4:3">4:3 (Standard)</option>
                 <option value="3:2">3:2 (Photo)</option>
@@ -287,6 +287,23 @@
           </div>
         </div>
       </div>
+      
+      <!-- Error Message -->
+      <div id="error-message" class="mt-6 hidden">
+        <div class="rounded-md bg-red-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i data-lucide="alert-circle" class="h-5 w-5 text-red-400"></i>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">Error generating image</h3>
+              <div class="mt-2 text-sm text-red-700">
+                <p id="error-text">An error occurred while generating the image. Please try again.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -300,10 +317,6 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const closeMenuButton = document.getElementById('close-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        const prompt = document.getElementById('prompt').value;
-        const negativePrompt = document.getElementById('negative-prompt').value;
-        const style = document.getElementById('style').value;
-        const aspectRatio = document.getElementById('aspect-ratio').value;
         
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.remove('hidden');
@@ -320,7 +333,7 @@
             }
         });
         
-      document.getElementById('image-generation-form').addEventListener('submit', async function(e) {
+       document.getElementById('image-generation-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Get form values
@@ -331,7 +344,7 @@
     
     // Validate prompt
     if (!prompt.trim()) {
-      alert('Please enter a prompt');
+      showError('Please enter a prompt');
       return;
     }
     
@@ -339,6 +352,12 @@
     const generateBtn = document.getElementById('generate-btn');
     const generateText = document.getElementById('generate-text');
     const loadingSpinner = document.getElementById('loading-spinner');
+    const resultContainer = document.getElementById('result-container');
+    const errorMessage = document.getElementById('error-message');
+    
+    // Hide previous results and errors
+    resultContainer.classList.add('hidden');
+    errorMessage.classList.add('hidden');
     
     generateText.classList.add('hidden');
     loadingSpinner.classList.remove('hidden');
@@ -361,26 +380,36 @@
         })
       });
       
+      // Check if response is OK
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+      
       const data = await response.json();
       
       if (data.success) {
-        // Display generated image
-        const resultContainer = document.getElementById('result-container');
+        // Display generated image using direct_url and trim whitespace
+        const imageUrl = data.direct_url?.trim() || data.image_url?.trim();
+        
+        if (!imageUrl) {
+          throw new Error('No image URL found in response');
+        }
+        
         const generatedImage = document.getElementById('generated-image');
         const downloadLink = document.getElementById('download-link');
         
-        generatedImage.src = data.image_url;
-        downloadLink.href = data.image_url;
+        generatedImage.src = imageUrl;
+        downloadLink.href = imageUrl;
         resultContainer.classList.remove('hidden');
         
         // Scroll to results
         resultContainer.scrollIntoView({ behavior: 'smooth' });
       } else {
-        alert('Failed to generate image: ' + data.message);
+        throw new Error(data.message || 'Failed to generate image');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while generating the image. Please try again.');
+      showError(`Error: ${error.message}`);
     } finally {
       // Reset button state
       generateText.classList.remove('hidden');
@@ -388,6 +417,14 @@
       generateBtn.disabled = false;
     }
   });
+  
+  function showError(message) {
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    
+    errorText.textContent = message;
+    errorMessage.classList.remove('hidden');
+  }
         
     </script>
 </body>
