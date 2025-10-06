@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vistara AI - AI-Powered Image Generation</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
@@ -29,7 +34,7 @@
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-white dark:bg-gray-900 transition-colors duration-200">
     <!-- Header Section -->
     <header class="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
@@ -38,23 +43,33 @@
                     <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
                         <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                     </div>
-                    <span class="ml-2 text-xl font-bold text-gray-900">Vistara<span class="text-indigo-600">AI</span></span>
+                    <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">Vistara<span class="text-indigo-600">AI</span></span>
                 </a>
             </div>
-            <div class="flex lg:hidden">
-                <button type="button" id="mobile-menu-button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+            <div class="flex lg:hidden gap-2">
+                <button type="button" id="dark-mode-toggle-mobile" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <span class="sr-only">Toggle dark mode</span>
+                    <i data-lucide="moon" class="w-6 h-6 dark-mode-icon-dark hidden dark:block"></i>
+                    <i data-lucide="sun" class="w-6 h-6 dark-mode-icon-light dark:hidden"></i>
+                </button>
+                <button type="button" id="mobile-menu-button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-300">
                     <span class="sr-only">Open main menu</span>
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
-                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Feuture</a>
-                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Playground </a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Testimonials</a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Contact</a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">FAQ</a>
+                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Feuture</a>
+                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Playground </a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Testimonials</a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Contact</a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
             </div>
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 lg:items-center">
+                <button type="button" id="dark-mode-toggle-desktop" class="rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <span class="sr-only">Toggle dark mode</span>
+                    <i data-lucide="moon" class="w-5 h-5 dark-mode-icon-dark hidden dark:block"></i>
+                    <i data-lucide="sun" class="w-5 h-5 dark-mode-icon-light dark:hidden"></i>
+                </button>
                 <a href="#" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors">Contact Now</a>
             </div>
         </nav>
@@ -62,27 +77,27 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
             <div class="fixed inset-0 z-50"></div>
-            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:ring-gray-100/10">
                 <div class="flex items-center justify-between">
                     <a href="#" class="-m-1.5 p-1.5 flex items-center">
                         <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
                             <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                         </div>
-                        <span class="ml-2 text-xl font-bold text-gray-900">Vistara<span class="text-indigo-600">AI</span></span>
+                        <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">Vistara<span class="text-indigo-600">AI</span></span>
                     </a>
-                    <button type="button" id="close-menu-button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                    <button type="button" id="close-menu-button" class="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-300">
                         <span class="sr-only">Close menu</span>
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                 </div>
                 <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-gray-500/10">
+                    <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-700/50">
                         <div class="space-y-2 py-6">
-                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Feuture</a>
-                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Playground </a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Testimonials</a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Contact</a>
-                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">FAQ</a>
+                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Feuture</a>
+                          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Playground </a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Testimonials</a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">Contact</a>
+                            <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
                         </div>
                         <div class="py-6">
                             <a href="#" class="block rounded-md bg-indigo-600 px-3 py-2.5 text-base font-semibold text-white text-center hover:bg-indigo-500">Contact Now</a>
@@ -107,10 +122,10 @@
             </div>
             
             <div class="text-center">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                    Transform Your Ideas Into <span class="text-indigo-600">Stunning Visuals</span>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+                    Transform Your Ideas Into <span class="text-indigo-600 dark:text-indigo-400">Stunning Visuals</span>
                 </h1>
-                <p class="mt-6 text-lg leading-8 text-gray-600">
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
                     Vistara AI generates high-quality images from text descriptions in seconds. Create art, designs, and visual content with the power of artificial intelligence.
                 </p>
                 
@@ -118,7 +133,7 @@
                     <a href="#" class="rounded-md bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
                         Generate Your First Image
                     </a>
-                    <a href="#" class="flex items-center text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition-colors">
+                    <a href="#" class="flex items-center text-base font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                         Watch demo <i data-lucide="play" class="ml-2 w-4 h-4"></i>
                     </a>
                 </div>
@@ -131,61 +146,61 @@
     </div>
     
     
-    <div class="bg-white py-24 sm:py-32">
+    <div class="bg-white dark:bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl lg:text-center">
-      <h2 class="text-base font-semibold leading-7 text-indigo-600">Powerful Features</h2>
-      <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Everything you need to create stunning visuals</p>
-      <p class="mt-6 text-lg leading-8 text-gray-600">Vistara AI provides cutting-edge tools to transform your ideas into breathtaking images with minimal effort.</p>
+      <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Powerful Features</h2>
+      <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Everything you need to create stunning visuals</p>
+      <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Vistara AI provides cutting-edge tools to transform your ideas into breathtaking images with minimal effort.</p>
     </div>
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
       <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
         <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
+          <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">
             <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
               <i data-lucide="zap" class="h-6 w-6 text-white"></i>
             </div>
             Lightning Fast Generation
           </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Create high-quality images in seconds with our optimized AI models, saving you valuable time.</dd>
+          <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Create high-quality images in seconds with our optimized AI models, saving you valuable time.</dd>
         </div>
         <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
+          <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">
             <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
               <i data-lucide="image" class="h-6 w-6 text-white"></i>
             </div>
             High Resolution Output
           </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Generate stunning 4K images with incredible detail and clarity for professional use.</dd>
+          <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Generate stunning 4K images with incredible detail and clarity for professional use.</dd>
         </div>
         <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
+          <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">
             <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
               <i data-lucide="sliders" class="h-6 w-6 text-white"></i>
             </div>
             Customizable Styles
           </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Adjust artistic styles, colors, and compositions to match your exact vision.</dd>
+          <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Adjust artistic styles, colors, and compositions to match your exact vision.</dd>
         </div>
         <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
+          <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">
             <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
               <i data-lucide="sparkles" class="h-6 w-6 text-white"></i>
             </div>
             Creative Freedom
           </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Unleash your imagination with tools designed to bring even the most fantastical ideas to life.</dd>
+          <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Unleash your imagination with tools designed to bring even the most fantastical ideas to life.</dd>
         </div>
       </dl>
     </div>
   </div>
 </div>
 
-<div class="bg-white py-24 sm:py-32">
+<div class="bg-white dark:bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">AI Image Playground</h2>
-      <p class="mt-4 text-lg leading-8 text-gray-600">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">AI Image Playground</h2>
+      <p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300">
         Transform your imagination into stunning visuals with our AI-powered image generator.
       </p>
     </div>
@@ -194,35 +209,35 @@
       <form id="image-generation-form" class="space-y-6">
         <!-- Prompt Input with Label and Icon -->
         <div>
-          <label for="prompt" class="block text-sm font-medium leading-6 text-gray-900 mb-2 flex items-center">
-            <i data-lucide="message-square" class="h-4 w-4 mr-2 text-indigo-600"></i>
+          <label for="prompt" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <i data-lucide="message-square" class="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400"></i>
             Describe your image
           </label>
           <div class="mt-2">
-            <textarea id="prompt" name="prompt" rows="4" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style">A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style</textarea>
+            <textarea id="prompt" name="prompt" rows="4" class="block w-full rounded-md border-0 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style">A futuristic city skyline at sunset, with flying cars and neon holographic billboards, cyberpunk style</textarea>
           </div>
         </div>
 
         <!-- Negative Prompt Input with Label and Icon -->
         <div>
-          <label for="negative-prompt" class="block text-sm font-medium leading-6 text-gray-900 mb-2 flex items-center">
-            <i data-lucide="ban" class="h-4 w-4 mr-2 text-indigo-600"></i>
+          <label for="negative-prompt" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <i data-lucide="ban" class="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400"></i>
             Negative prompt (Optional)
           </label>
           <div class="mt-2">
-            <input type="text" id="negative-prompt" name="negative-prompt" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="blurry, low quality, distorted faces, poor lighting" value="blurry, low quality, distorted faces, poor lighting">
+            <input type="text" id="negative-prompt" name="negative-prompt" class="block w-full rounded-md border-0 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="blurry, low quality, distorted faces, poor lighting" value="blurry, low quality, distorted faces, poor lighting">
           </div>
         </div>
 
         <!-- Style and Aspect Ratio with Labels and Icons -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label for="style" class="block text-sm font-medium leading-6 text-gray-900 mb-2 flex items-center">
-              <i data-lucide="palette" class="h-4 w-4 mr-2 text-indigo-600"></i>
+            <label for="style" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+              <i data-lucide="palette" class="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400"></i>
               Style Preset
             </label>
             <div class="mt-2">
-              <select id="style" name="style" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select id="style" name="style" class="block w-full rounded-md border-0 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6">
                 <option value="neon-punk" selected>Neon Punk</option>
                 <option value="digital-art">Digital Art</option>
                 <option value="oil-painting">Oil Painting</option>
@@ -234,12 +249,12 @@
           </div>
 
           <div>
-            <label for="aspect-ratio" class="block text-sm font-medium leading-6 text-gray-900 mb-2 flex items-center">
-              <i data-lucide="crop" class="h-4 w-4 mr-2 text-indigo-600"></i>
+            <label for="aspect-ratio" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+              <i data-lucide="crop" class="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400"></i>
               Aspect Ratio
             </label>
             <div class="mt-2">
-              <select id="aspect-ratio" name="aspect-ratio" class="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select id="aspect-ratio" name="aspect-ratio" class="block w-full rounded-md border-0 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6">
                 <option value="16:9" selected>16:9 (Widescreen)</option>
                 <option value="1:1">1:1 (Square)</option>
                 <option value="4:3">4:3 (Standard)</option>
@@ -269,18 +284,18 @@
 
       <!-- Generated Image Section -->
       <div id="result-container" class="mt-16 hidden">
-        <div class="border border-gray-200 rounded-lg p-6 bg-gray-50">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <i data-lucide="image" class="h-5 w-5 mr-2 text-indigo-600"></i>
+        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-gray-800">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+            <i data-lucide="image" class="h-5 w-5 mr-2 text-indigo-600 dark:text-indigo-400"></i>
             Generated Image
           </h3>
           <div class="flex justify-center">
-            <div class="relative overflow-hidden rounded-lg bg-gray-200 border border-gray-300 shadow-md w-full max-w-lg">
+            <div class="relative overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 shadow-md w-full max-w-lg">
               <img id="generated-image" src="" alt="Generated image" class="w-full h-auto">
             </div>
           </div>
           <div class="mt-6 text-center">
-            <a id="download-link" href="#" download class="inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-indigo-300 hover:bg-indigo-50 transition-all">
+            <a id="download-link" href="#" download class="inline-flex items-center rounded-md bg-white dark:bg-gray-700 px-4 py-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 shadow-sm ring-1 ring-inset ring-indigo-300 dark:ring-indigo-600 hover:bg-indigo-50 dark:hover:bg-gray-600 transition-all">
               <i data-lucide="download" class="mr-2 h-4 w-4"></i>
               Download Image
             </a>
@@ -290,14 +305,14 @@
       
       <!-- Error Message -->
       <div id="error-message" class="mt-6 hidden">
-        <div class="rounded-md bg-red-50 p-4">
+        <div class="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
           <div class="flex">
             <div class="flex-shrink-0">
               <i data-lucide="alert-circle" class="h-5 w-5 text-red-400"></i>
             </div>
             <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">Error generating image</h3>
-              <div class="mt-2 text-sm text-red-700">
+              <h3 class="text-sm font-medium text-red-800 dark:text-red-400">Error generating image</h3>
+              <div class="mt-2 text-sm text-red-700 dark:text-red-300">
                 <p id="error-text">An error occurred while generating the image. Please try again.</p>
               </div>
             </div>
@@ -312,6 +327,29 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Dark mode toggle functionality
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+        const darkModeToggleDesktop = document.getElementById('dark-mode-toggle-desktop');
+        
+        // Check for saved dark mode preference or default to light mode
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        // Toggle dark mode function
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            // Re-initialize icons to update them
+            lucide.createIcons();
+        }
+        
+        // Add event listeners to both toggles
+        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+        darkModeToggleDesktop.addEventListener('click', toggleDarkMode);
         
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
