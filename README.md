@@ -20,17 +20,17 @@ Vistara AI is a modern, sleek web frontend for AI‑powered image generation fro
 
 ### Prerequisites
 
-- A backend or API endpoint that accepts the prompt, style, negative prompt, aspect ratio etc., and returns an image URL or binary image data  
-- Node.js (if you plan to run a local dev server)  
-- Serve the static HTML / JS (or integrate into a frontend framework)
+- A backend or API endpoint that accepts the prompt, style and presets
+- A code editor
+
 
 ### Installation (Local Development)
 
 ```bash
 # If using a local server or bundler, clone this repo:
-git clone https://github.com/yourusername/vistara-ai.git
-cd vistara-ai
+git clone https://github.com/DevAryanPro/VistaraAI
 
-# (Optional) If using a local dev server setup (e.g. with HTTP server or bundler), install dependencies:
-npm install
-npm run dev
+# Edit your index.html directly through vscode or another ide:
+code VistaraAI/index.html
+
+That's it! 
