@@ -36,6 +36,13 @@ window.addEventListener('click', (event) => {
     }
 });
 
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
+});
+
 document.getElementById('image-generation-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
